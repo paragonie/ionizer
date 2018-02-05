@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<psalm
+    name="Psalm configuration for Ionizer"
+    useDocblockTypes="true"
+    totallyTyped="false"
+>
+    <projectFiles>
+        <directory name="src" />
+    </projectFiles>
+</psalm>

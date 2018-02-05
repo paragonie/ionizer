@@ -1,0 +1,34 @@
+{
+  "name": "paragonie/ionizer",
+  "authors": [
+    {
+      "name": "Paragon Initiative Enterprises",
+      "email": "info@paragonie.com",
+      "homepage": "https://paragonie.com",
+      "role": "Development Team"
+    }
+  ],
+  "config": {
+    "preferred-install": "dist",
+    "optimize-autoloader": true
+  },
+  "autoload": {
+    "psr-4": {
+      "ParagonIE\\Ionizer\\": "./src"
+    }
+  },
+  "require": {
+    "php": "^7.2",
+    "paragonie/constant_time_encoding": "^2.1"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^6.5",
+    "vimeo/psalm": "^0|^1"
+  },
+  "support": {
+    "email": "security@paragonie.com",
+    "issues": "https://github.com/paragonie/airship/issues",
+    "source": "https://github.com/paragonie/airship",
+    "docs": "https://github.com/paragonie/airship-docs"
+  }
+}
