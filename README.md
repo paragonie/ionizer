@@ -33,7 +33,7 @@ $ic->addFilter(
 
 // Invoke the filter container on the array to get the filtered result:
 try {
-    // $post is
+    // $post passed all of our filters.
     $post = $ic($_POST);
 } catch (\TypeError $ex) {
     // Invalid data provided.
