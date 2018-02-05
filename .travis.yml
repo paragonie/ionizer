@@ -13,6 +13,9 @@ matrix:
     - php: "nightly"
     - php: "master"
 
+install:
+    - composer update
+
 script:
   - vendor/bin/phpunit
   - vendor/bin/psalm
