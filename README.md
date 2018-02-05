@@ -39,3 +39,40 @@ try {
     // Invalid data provided.
 }
 ```
+
+Ionizer can even specify structured input with some caveats.
+
+```php
+<?php
+
+use ParagonIE\Ionizer\GeneralFilterContainer;
+use ParagonIE\Ionizer\Filter\{
+    IntFilter,
+    IntArrayFilter,
+    StringArrayFilter,
+    StringFilter
+};
+
+$ic = new GeneralFilterContainer();
+    // You can type entire arrays at once:
+$ic->addFilter('numbers', new IntArrayFilter())
+    ->addFilter('strings', new StringArrayFilter())
+    
+    // You can also specify subkeys, separated by a period:
+    ->addFilter('user.name', new StringFilter())
+    ->addFilter('user.unixtime', new IntFilter());
+
+$input = [
+    'numbers' => [1, 2, 3],
+    'strings' => ['a', 'b'],
+    'user' => [
+        'name' => 'test',
+        'unixtime' => time()
+    ]    
+];
+
+try {
+    $valid = $ic($input);
+} catch (\TypeError $ex) {
+}
+```
