@@ -13,7 +13,7 @@ use ParagonIE\Ionizer\Contract\{
  * Contains a set of filter rules, useful for enforcing a strict type on
  * unstrucutred data (e.g. HTTP POST parameters).
  *
- * @package Airship\Engine\Security\Filter
+ * @package ParagonIE\Ionizer
  */
 abstract class InputFilterContainer implements FilterContainerInterface
 {
