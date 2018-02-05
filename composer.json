@@ -17,6 +17,7 @@
       "ParagonIE\\Ionizer\\": "./src"
     }
   },
+  "license": "ISC",
   "require": {
     "php": "^7",
     "paragonie/constant_time_encoding": "^2.1"
