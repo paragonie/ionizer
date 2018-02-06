@@ -24,6 +24,40 @@ abstract class Util
     }
 
     /**
+     * @param mixed $input
+     * @return string
+     * @throws \TypeError
+     */
+    public static function getType($input): string
+    {
+        if (\is_null($input)) {
+            return 'null';
+        }
+        if (\is_callable($input)) {
+            return 'callable';
+        }
+        if (\is_resource($input)) {
+            return 'resource';
+        }
+        if (\is_object($input)) {
+            return \get_class($input);
+        }
+        if (\is_string($input)) {
+            return 'string';
+        }
+        $type = \gettype($input);
+        switch ($type) {
+            case 'boolean':
+                return 'bool';
+            case 'double':
+                return 'float';
+            case 'integer':
+                return 'int';
+        }
+        throw new \TypeError('Unknown type');
+    }
+
+    /**
      * Returns true if every member of an array is NOT another array
      *
      * @param array $source
