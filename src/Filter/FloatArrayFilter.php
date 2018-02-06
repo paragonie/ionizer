@@ -27,6 +27,8 @@ class FloatArrayFilter extends ArrayFilter
      * @param int $offset
      * @return mixed
      * @throws \TypeError
+     * @psalm-suppress MixedArrayOffset
+     * @psalm-suppress RedundantCondition
      */
     public function applyCallbacks($data = null, int $offset = 0)
     {
@@ -38,12 +40,16 @@ class FloatArrayFilter extends ArrayFilter
                     \sprintf('Expected an array of floats (%s).', $this->index)
                 );
             }
+
+            /** @var array<string, float> $data */
+            $data = (array) $data;
             if (!Util::is1DArray($data)) {
                 throw new \TypeError(
                     \sprintf('Expected a 1-dimensional array (%s).', $this->index)
                 );
             }
-            $data = (array) $data;
+
+            /** @var float|null $val */
             foreach ($data as $key => $val) {
                 if (\is_array($val)) {
                     throw new \TypeError(

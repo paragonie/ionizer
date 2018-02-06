@@ -19,4 +19,25 @@ class ArrayFilter extends InputFilter
      * @var string
      */
     protected $type = 'array';
+
+    /**
+     * Process data using the filter rules.
+     *
+     * @param mixed $data
+     * @return array
+     * @throws \TypeError
+     */
+    public function process($data = null)
+    {
+        if (\is_array($data)) {
+            $data = (array) $data;
+        } elseif (\is_null($data)) {
+            $data = [];
+        } else {
+            throw new \TypeError(
+                \sprintf('Expected an array (%s).', $this->index)
+            );
+        }
+        return (array) parent::process($data);
+    }
 }

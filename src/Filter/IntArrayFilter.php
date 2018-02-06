@@ -27,6 +27,8 @@ class IntArrayFilter extends ArrayFilter
      * @param int $offset
      * @return mixed
      * @throws \TypeError
+     * @psalm-suppress MixedArrayOffset
+     * @psalm-suppress RedundantCondition
      */
     public function applyCallbacks($data = null, int $offset = 0)
     {
@@ -38,12 +40,14 @@ class IntArrayFilter extends ArrayFilter
                     \sprintf('Expected an array of integers (%s).', $this->index)
                 );
             }
+            /** @var array<string, int> $data */
+            $data = (array) $data;
             if (!Util::is1DArray($data)) {
                 throw new \TypeError(
                     \sprintf('Expected a 1-dimensional array (%s).', $this->index)
                 );
             }
-            $data = (array) $data;
+            /** @var int|null $val */
             foreach ($data as $key => $val) {
                 if (\is_array($val)) {
                     throw new \TypeError(

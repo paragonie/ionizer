@@ -28,6 +28,23 @@ class BoolFilter extends InputFilter
     protected $type = 'bool';
 
     /**
+     * Process data using the filter rules.
+     *
+     * @param mixed $data
+     * @return bool
+     * @throws \TypeError
+     */
+    public function process($data = null)
+    {
+        if (\is_array($data)) {
+            throw new \TypeError(
+                \sprintf('Unexpected array for boolean filter (%s).', $this->index)
+            );
+        }
+        return (bool) parent::process(!empty($data));
+    }
+
+    /**
      * Sets the expected input type (e.g. string, boolean)
      *
      * @param string $typeIndicator

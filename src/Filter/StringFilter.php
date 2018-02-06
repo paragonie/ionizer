@@ -40,6 +40,35 @@ class StringFilter extends InputFilter
     }
 
     /**
+     * Process data using the filter rules.
+     *
+     * @param mixed $data
+     * @return string
+     * @throws \TypeError
+     */
+    public function process($data = null)
+    {
+        if (\is_array($data)) {
+            throw new \TypeError(
+                \sprintf('Unexpected array for string filter (%s).', $this->index)
+            );
+        }
+        if (\is_string($data)) {
+        } elseif (\is_object($data) && \method_exists($data, '__toString')) {
+            $data = (string)$data->__toString();
+        } elseif (\is_numeric($data)) {
+            $data = (string)$data;
+        } elseif (\is_null($data)) {
+            $data = null;
+        } else {
+            throw new \TypeError(
+                \sprintf('Expected a string (%s).', $this->index)
+            );
+        }
+        return (string) parent::process($data);
+    }
+
+        /**
      * Set a regular expression pattern that the input string
      * must match.
      *
@@ -68,7 +97,7 @@ class StringFilter extends InputFilter
     {
         if ($offset === 0) {
             if (!empty($this->pattern)) {
-                if (!\preg_match($this->pattern, $data)) {
+                if (!\preg_match((string) $this->pattern, (string) $data)) {
                     throw new \TypeError(
                         \sprintf('Pattern match failed (%s).', $this->index)
                     );

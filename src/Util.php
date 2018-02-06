@@ -13,7 +13,7 @@ abstract class Util
      *
      * @param $str
      * @param $token
-     * @return array
+     * @return array<int, string>
      */
     public static function chunk(string $str, string $token = '/'): array
     {

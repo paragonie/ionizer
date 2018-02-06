@@ -11,7 +11,7 @@ use ParagonIE\Ionizer\InputFilter;
 class WhiteList extends InputFilter
 {
     /**
-     * @var array
+     * @var array<int, mixed>
      */
     protected $allowedValues = [];
 
@@ -27,6 +27,7 @@ class WhiteList extends InputFilter
     /**
      * @param array<int, mixed> values
      * @return self
+     * @psalm-suppress MixedAssignment
      */
     protected function addToWhiteList(...$values)
     {
@@ -69,13 +70,15 @@ class WhiteList extends InputFilter
     public function process($data = null)
     {
         if (!empty($this->allowedValues)) {
-            if (!\in_array($data, $this->allowedValues)) {
+            if (!\in_array($data, $this->allowedValues, true)) {
                 $data = null;
             }
         }
 
+        /** @psalm-suppress MixedAssignment */
         $data = $this->applyCallbacks($data, 0);
         if ($data === null) {
+            /** @psalm-suppress MixedAssignment */
             $data = $this->default;
         }
 

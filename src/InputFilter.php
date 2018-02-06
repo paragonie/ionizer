@@ -47,6 +47,7 @@ class InputFilter implements FilterInterface
      */
     public function setDefault($value): FilterInterface
     {
+        /** @psalm-suppress MixedAssignment */
         $this->default = $value;
         return $this;
     }
@@ -72,92 +73,17 @@ class InputFilter implements FilterInterface
      */
     public function process($data = null)
     {
-        if ($this->type === 'string') {
-            if (\is_array($data)) {
-                throw new \TypeError(
-                    \sprintf('Unexpected array for string filter (%s).', $this->index)
-                );
-            }
-            if (\is_string($data)) {
-            } elseif (\is_object($data) && \method_exists($data, '__toString')) {
-                $data = (string) $data->__toString();
-            } elseif (\is_numeric($data)) {
-                $data = (string) $data;
-            } elseif (\is_null($data)) {
-                $data = null;
-            } else {
-                throw new \TypeError(
-                    \sprintf('Expected a string (%s).', $this->index)
-                );
-            }
-        }
-
-        if ($this->type === 'int') {
-            if (\is_array($data)) {
-                throw new \TypeError(
-                    \sprintf('Unexpected array for integer filter (%s).', $this->index)
-                );
-            }
-            if (\is_int($data) || \is_float($data)) {
-                $data = (int) $data;
-            } elseif (\is_null($data) || $data === '') {
-                $data = null;
-            } elseif (\is_string($data) && \preg_match('#^\-?[0-9]+$#', $data)) {
-                $data = (int) $data;
-            } else {
-                throw new \TypeError(
-                    \sprintf('Expected an integer (%s).', $this->index)
-                );
-            }
-        }
-
-        if ($this->type === 'float') {
-            if (\is_array($data)) {
-                throw new \TypeError(
-                    \sprintf('Unexpected array for float filter (%s).', $this->index)
-                );
-            }
-            if (\is_int($data) || \is_float($data)) {
-                $data = (float) $data;
-            } elseif (\is_null($data) || $data === '') {
-                $data = null;
-            } elseif (\is_string($data) && \is_numeric($data)) {
-                $data = (float) $data;
-            } else {
-                throw new \TypeError(
-                    \sprintf('Expected an integer or floating point number (%s).', $this->index)
-                );
-            }
-        }
-
-        if ($this->type === 'array' || Binary::safeSubstr($this->type, -2) === '[]') {
-            if (\is_array($data)) {
-                $data = (array) $data;
-            } elseif (\is_null($data)) {
-                $data = [];
-            } else {
-                throw new \TypeError(
-                    \sprintf('Expected an array (%s).', $this->index)
-                );
-            }
-        }
-
-        if ($this->type === 'bool') {
-            if (\is_array($data)) {
-                throw new \TypeError(
-                    \sprintf('Unexpected array for boolean filter (%s).', $this->index)
-                );
-            }
-            $data = !empty($data);
-        }
-
+        /** @psalm-suppress MixedAssignment */
         $data = $this->applyCallbacks($data, 0);
         if ($data === null) {
+            /** @psalm-suppress MixedAssignment */
             $data = $this->default;
         }
 
         // For type strictness:
         switch ($this->type) {
+            case 'array':
+                return (array) $data;
             case 'bool':
                 return (bool) $data;
             case 'float':
@@ -191,6 +117,7 @@ class InputFilter implements FilterInterface
         }
         $func = $this->callbacks[$offset];
         if (\is_callable($func)) {
+            /** @psalm-suppress MixedAssignment */
             $data = $func($data);
         }
         return $this->applyCallbacks($data, $offset + 1);

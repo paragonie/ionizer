@@ -41,6 +41,7 @@ abstract class InputFilterContainer implements FilterContainerInterface
         if (!isset($this->filterMap[$path])) {
             $this->filterMap[$path] = [];
         }
+        /** @psalm-suppress MixedArrayAssignment */
         $this->filterMap[$path][] = $filter->setIndex($path);
         return $this;
     }
@@ -52,9 +53,11 @@ abstract class InputFilterContainer implements FilterContainerInterface
      * @param mixed $multiDimensional
      * @return mixed
      * @throws \Error
+     * @psalm-suppress MixedAssignment
      */
     public function filterValue(string $key, $multiDimensional)
     {
+        /** @var array<int, string> $pieces */
         $pieces = Util::chunk($key, '.');
         $filtered =& $multiDimensional;
 
@@ -97,13 +100,17 @@ abstract class InputFilterContainer implements FilterContainerInterface
      * Doesn't apply filters
      *
      * @param string $key
-     * @param array $multiDimensional
+     * @param array<string, string> $multiDimensional
      * @return mixed
+     * @psalm-suppress MixedArrayOffset
+     * @psalm-suppress PossiblyInvalidArrayOffset
      */
     public function getUnfilteredValue(string $key, array $multiDimensional = [])
     {
         $pieces = Util::chunk($key, '.');
         $value = $multiDimensional;
+        /** @var array<int, string> $pieces */
+        /** @var string $piece */
         foreach ($pieces as $piece) {
             if (!isset($value[$piece])) {
                 return null;
@@ -132,7 +139,6 @@ abstract class InputFilterContainer implements FilterContainerInterface
         return $sanitized;
     }
 
-
     /**
      * Process the input array.
      *
@@ -142,7 +148,9 @@ abstract class InputFilterContainer implements FilterContainerInterface
      */
     public function __invoke(array $dataInput = []): array
     {
+        /** @var string $key */
         foreach (\array_keys($this->filterMap) as $key) {
+            /** @var array $dataInput */
             $dataInput = $this->filterValue($key, $dataInput);
         }
         return $dataInput;

@@ -28,8 +28,7 @@
   },
   "support": {
     "email": "security@paragonie.com",
-    "issues": "https://github.com/paragonie/airship/issues",
-    "source": "https://github.com/paragonie/airship",
-    "docs": "https://github.com/paragonie/airship-docs"
+    "issues": "https://github.com/paragonie/ionizer/issues",
+    "source": "https://github.com/paragonie/ionizer"
   }
 }

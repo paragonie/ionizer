@@ -22,6 +22,8 @@ class BoolArrayFilter extends ArrayFilter
      * @param int $offset
      * @return mixed
      * @throws \TypeError
+     * @psalm-suppress MixedArrayOffset
+     * @psalm-suppress RedundantCondition
      */
     public function applyCallbacks($data = null, int $offset = 0)
     {
@@ -33,15 +35,17 @@ class BoolArrayFilter extends ArrayFilter
                     \sprintf('Expected an array of booleans (%s).', $this->index)
                 );
             }
+            /**
+             * @var array<mixed, array<mixed, mixed>>
+             */
+            $data = (array) $data;
+
             if (!Util::is1DArray($data)) {
                 throw new \TypeError(
                     \sprintf('Expected a 1-dimensional array (%s).', $this->index)
                 );
             }
-            /**
-             * @var array<mixed, array<mixed, mixed>>
-             */
-            $data = (array) $data;
+            /** @var float|null $val */
             foreach ($data as $key => $val) {
                 if (\is_array($val)) {
                     throw new \TypeError(
