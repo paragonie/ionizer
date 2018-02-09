@@ -4,6 +4,7 @@ namespace ParagonIE\Ionizer\Filter;
 
 use ParagonIE\ConstantTime\Binary;
 use ParagonIE\Ionizer\InputFilter;
+use ParagonIE\Ionizer\InvalidDataException;
 
 /**
  * Class StringFilter
@@ -29,12 +30,12 @@ class StringFilter extends InputFilter
     /**
      * @param string $input
      * @return string
-     * @throws \TypeError
+     * @throws InvalidDataException
      */
     public static function nonEmpty(string $input): string
     {
         if (Binary::safeStrlen($input) < 1) {
-            throw new \TypeError();
+            throw new InvalidDataException('String cannot be empty');
         }
         return $input;
     }
@@ -91,6 +92,7 @@ class StringFilter extends InputFilter
      * @param mixed $data
      * @param int $offset
      * @return mixed
+     * @throws InvalidDataException
      * @throws \TypeError
      */
     public function applyCallbacks($data = null, int $offset = 0)
@@ -98,7 +100,7 @@ class StringFilter extends InputFilter
         if ($offset === 0) {
             if (!empty($this->pattern)) {
                 if (!\preg_match((string) $this->pattern, (string) $data)) {
-                    throw new \TypeError(
+                    throw new InvalidDataException(
                         \sprintf('Pattern match failed (%s).', $this->index)
                     );
                 }

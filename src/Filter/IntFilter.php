@@ -16,9 +16,55 @@ class IntFilter extends InputFilter
     protected $default = 0;
 
     /**
+     * @var int|null
+     */
+    protected $max = null;
+
+    /**
+     * @var int|null
+     */
+    protected $min = null;
+
+    /**
      * @var string
      */
     protected $type = 'int';
+
+    /**
+     * @param int|null $value
+     * @return self
+     * @throws \TypeError
+     */
+    public function setMaximumValue($value = null): self
+    {
+        if (\is_null($value)) {
+            $this->max = $value;
+            return $this;
+        }
+        if (!\is_int($value)) {
+            throw new \TypeError('An integer was expected. ' . \gettype($value) . ' given.');
+        }
+        $this->max = (int) $value;
+        return $this;
+    }
+
+    /**
+     * @param int|null $value
+     * @return self
+     * @throws \TypeError
+     */
+    public function setMinimumValue($value = null): self
+    {
+        if (\is_null($value)) {
+            $this->min = $value;
+            return $this;
+        }
+        if (!\is_int($value)) {
+            throw new \TypeError('An integer was expected. ' . \gettype($value) . ' given.');
+        }
+        $this->min = (int) $value;
+        return $this;
+    }
 
     /**
      * Process data using the filter rules.
@@ -45,6 +91,18 @@ class IntFilter extends InputFilter
                 \sprintf('Expected an integer (%s).', $this->index)
             );
         }
+
+        if (!\is_null($this->min) && !\is_null($data)) {
+            if ($data < $this->min) {
+                $data = null;
+            }
+        }
+        if (!\is_null($this->max) && !\is_null($data)) {
+            if ($data > $this->max) {
+                $data = null;
+            }
+        }
+
         return (int) parent::process($data);
     }
 }

@@ -4,7 +4,7 @@ namespace ParagonIE\Ionizer\Contract;
 
 /**
  * Interface FilterInterface
- * @package Airship\Engine\Contract\Security
+ * @package ParagonIE\Ionizer\Contract
  */
 interface FilterInterface
 {

@@ -5,6 +5,10 @@ namespace ParagonIE\Ionizer;
 use ParagonIE\ConstantTime\Binary;
 use ParagonIE\Ionizer\Contract\FilterInterface;
 
+/**
+ * Class InputFilter
+ * @package ParagonIE\Ionizer
+ */
 class InputFilter implements FilterInterface
 {
     /**
@@ -37,6 +41,24 @@ class InputFilter implements FilterInterface
     {
         $this->type = $typeIndicator;
         return $this;
+    }
+
+    /**
+     * Throw an InvalidDataException is this field is not defined/populated.
+     * Use in a callback.
+     *
+     * $filter->addCallback([InputFilter::class, 'required']);
+     *
+     * @param mixed|null $data
+     * @return mixed
+     * @throws InvalidDataException
+     */
+    public static function required($data = null)
+    {
+        if (\is_null($data)) {
+            throw new InvalidDataException('This is not an optional field.');
+        }
+        return $data;
     }
 
     /**
