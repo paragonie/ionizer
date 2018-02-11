@@ -25,34 +25,53 @@ class WhiteList extends InputFilter
     }
 
     /**
-     * @param array<int, mixed> values
+     * @param array<int, string|int|float|bool|null> values
      * @return self
-     * @psalm-suppress MixedAssignment
      */
     protected function addToWhiteList(...$values)
     {
         switch ($this->type) {
             case 'bool':
+                /**
+                 * @var array<int, bool> $values
+                 * @var bool $val
+                 */
                 foreach ($values as $val) {
                     $this->allowedValues []= (bool) $val;
                 }
                 break;
             case 'float':
+                /**
+                 * @var array<int, float> $values
+                 * @var float $val
+                 */
                 foreach ($values as $val) {
                     $this->allowedValues []= (float) $val;
                 }
                 break;
             case 'int':
+                /**
+                 * @var array<int, int> $values
+                 * @var int $val
+                 */
                 foreach ($values as $val) {
                     $this->allowedValues []= (int) $val;
                 }
                 break;
             case 'string':
+                /**
+                 * @var array<int, string> $values
+                 * @var string $val
+                 */
                 foreach ($values as $val) {
                     $this->allowedValues []= (string) $val;
                 }
                 break;
             default:
+                /**
+                 * @var array<int, string> $values
+                 * @var string $val
+                 */
                 foreach ($values as $val) {
                     $this->allowedValues []= $val;
                 }
@@ -75,22 +94,26 @@ class WhiteList extends InputFilter
             }
         }
 
-        /** @psalm-suppress MixedAssignment */
+        /** @var string|int|float|bool|null $data */
         $data = $this->applyCallbacks($data, 0);
         if ($data === null) {
-            /** @psalm-suppress MixedAssignment */
+            /** @var string|int|float|bool|null $data */
             $data = $this->default;
         }
 
         // For type strictness:
         switch ($this->type) {
             case 'bool':
+                /** @var bool $data */
                 return (bool) $data;
             case 'float':
+                /** @var float $data */
                 return (float) $data;
             case 'int':
+                /** @var int $data */
                 return (int) $data;
             case 'string':
+                /** @var string $data */
                 return (string) $data;
             default:
                 return $data;

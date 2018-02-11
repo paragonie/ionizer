@@ -31,7 +31,7 @@ class IntFilter extends InputFilter
     protected $type = 'int';
 
     /**
-     * @param int|null $value
+     * @param mixed|null $value
      * @return self
      * @throws \TypeError
      */
@@ -49,7 +49,7 @@ class IntFilter extends InputFilter
     }
 
     /**
-     * @param int|null $value
+     * @param mixed|null $value
      * @return self
      * @throws \TypeError
      */

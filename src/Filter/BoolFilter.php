@@ -64,7 +64,7 @@ class BoolFilter extends InputFilter
     /**
      * Set the default value (not applicable to booleans)
      *
-     * @param mixed $value
+     * @param string|int|float|bool|array|null $value
      * @return FilterInterface
      */
     public function setDefault($value): FilterInterface

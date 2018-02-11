@@ -29,7 +29,7 @@ class StrictArrayFilter extends ArrayFilter implements FilterInterface
     /**
      * Apply all of the callbacks for this filter.
      *
-     * @param array|null $data
+     * @param mixed|null $data
      * @param int $offset
      * @return mixed
      * @throws \TypeError
@@ -46,7 +46,11 @@ class StrictArrayFilter extends ArrayFilter implements FilterInterface
                     \sprintf('Expected an array (%s).', $this->index)
                 );
             }
-            /** @var array<mixed, mixed> $data */
+            $data = (array) $data;
+            /**
+             * @var array<mixed, mixed> $data
+             * @var string|int|float|bool|array|null $value
+             */
             foreach ($data as $key => $value) {
                 $keyType = Util::getType($key);
                 $valType = Util::getType($value);

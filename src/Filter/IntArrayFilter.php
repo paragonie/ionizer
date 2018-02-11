@@ -47,13 +47,10 @@ class IntArrayFilter extends ArrayFilter
                     \sprintf('Expected a 1-dimensional array (%s).', $this->index)
                 );
             }
-            /** @var int|null $val */
+            /**
+             * @var string|int|float|bool|array|null $val
+             */
             foreach ($data as $key => $val) {
-                if (\is_array($val)) {
-                    throw new \TypeError(
-                        \sprintf('Expected an integer at index %s (%s).', $key, $this->index)
-                    );
-                }
                 if (\is_int($val) || \is_float($val)) {
                     $data[$key] = (int) $val;
                 } elseif (\is_null($val) || $val === '') {

@@ -31,7 +31,7 @@ class FloatFilter extends InputFilter
     protected $type = 'float';
 
     /**
-     * @param float|null $value
+     * @param mixed|null $value
      * @return self
      * @throws \TypeError
      */
@@ -49,7 +49,7 @@ class FloatFilter extends InputFilter
     }
 
     /**
-     * @param float|null $value
+     * @param mixed|null $value
      * @return self
      * @throws \TypeError
      */

@@ -53,12 +53,12 @@ abstract class InputFilterContainer implements FilterContainerInterface
      * @param mixed $multiDimensional
      * @return mixed
      * @throws \Error
-     * @psalm-suppress MixedAssignment
      */
     public function filterValue(string $key, $multiDimensional)
     {
         /** @var array<int, string> $pieces */
         $pieces = Util::chunk($key, '.');
+        /** @var array|string $filtered */
         $filtered =& $multiDimensional;
 
         /**
@@ -84,14 +84,16 @@ abstract class InputFilterContainer implements FilterContainerInterface
 
         // If we have filters, let's apply them:
         if (isset($this->filterMap[$key])) {
+            /** @var object|null $filter */
             foreach ($this->filterMap[$key] as $filter) {
                 if ($filter instanceof FilterInterface) {
+                    /** @var string|int|bool|float|array $filtered */
                     $filtered = $filter->process($filtered);
                 }
             }
         }
 
-        return $multiDimensional;
+        return $filtered;
     }
 
     /**
@@ -100,22 +102,31 @@ abstract class InputFilterContainer implements FilterContainerInterface
      * Doesn't apply filters
      *
      * @param string $key
-     * @param array<string, string> $multiDimensional
+     * @param array<string, string|array> $multiDimensional
      * @return mixed
-     * @psalm-suppress MixedArrayOffset
      * @psalm-suppress PossiblyInvalidArrayOffset
      */
     public function getUnfilteredValue(string $key, array $multiDimensional = [])
     {
+        /** @var array<ing, string> $pieces */
         $pieces = Util::chunk($key, '.');
+
+        /** @var string|array<string, string|array> $value */
         $value = $multiDimensional;
-        /** @var array<int, string> $pieces */
-        /** @var string $piece */
+
+        /**
+         * @var array<string, string> $pieces
+         * @var string $piece
+         */
         foreach ($pieces as $piece) {
             if (!isset($value[$piece])) {
                 return null;
             }
-            $value = $value[$piece];
+            /** @var string|array<string, string|array> $next */
+            $next = $value[$piece];
+
+            /** @var string|array<string, string|array> $value */
+            $value = $next;
         }
         return $value;
     }
@@ -129,7 +140,7 @@ abstract class InputFilterContainer implements FilterContainerInterface
      */
     protected static function sanitize(string $input): string
     {
-        /** @var string $sanitized */
+        /** @var string|bool $sanitized */
         $sanitized = \json_encode(
             \preg_replace('#[^\x20-\x7e]#', '', $input)
         );

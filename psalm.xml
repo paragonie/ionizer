@@ -2,9 +2,12 @@
 <psalm
     name="Psalm configuration for Ionizer"
     useDocblockTypes="true"
-    totallyTyped="false"
+    totallyTyped="true"
 >
     <projectFiles>
         <directory name="src" />
     </projectFiles>
+    <issueHandlers>
+        <RedundantConditionGivenDocblockType errorLevel="info" />
+    </issueHandlers>
 </psalm>

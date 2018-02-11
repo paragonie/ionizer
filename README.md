@@ -6,7 +6,20 @@
 [![License](https://poser.pugx.org/paragonie/ionizer/license)](https://packagist.org/packages/paragonie/ionizer)
 [![Downloads](https://img.shields.io/packagist/dt/paragonie/ionizer.svg)](https://packagist.org/packages/paragonie/ionizer)
 
-Input filtering system used in [CMS Airship](https://github.com/paragonie/airship).
+Input filtering system used in [CMS Airship](https://github.com/paragonie/airship), now available
+for use in any project. **Requires PHP 7 or higher.**
+
+## What is Ionizer?
+
+Ionizer is a structured input filtering system ideal for HTTP form data.
+
+## Installing
+
+Get Composer, then run the following:
+
+```terminal
+composer require paragonie/ionizer
+```
 
 ## Usage
 

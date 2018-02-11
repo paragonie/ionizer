@@ -49,13 +49,10 @@ class FloatArrayFilter extends ArrayFilter
                 );
             }
 
-            /** @var float|null $val */
+            /**
+             * @var string|int|float|bool|array|null $val
+             */
             foreach ($data as $key => $val) {
-                if (\is_array($val)) {
-                    throw new \TypeError(
-                        \sprintf('Expected a float at index %s (%s).', $key, $this->index)
-                    );
-                }
                 if (\is_int($val) || \is_float($val)) {
                     $data[$key] = (float) $val;
                 } elseif (\is_null($val) || $val === '') {

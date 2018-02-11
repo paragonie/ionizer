@@ -44,11 +44,6 @@ class StringArrayFilter extends ArrayFilter
             }
             /** @var string|null $val */
             foreach ($data as $key => $val) {
-                if (\is_array($val)) {
-                    throw new \TypeError(
-                        \sprintf('Expected a string at index %s (%s).', $key, $this->index)
-                    );
-                }
                 if (\is_null($val)) {
                     $data[$key] = '';
                 } elseif (\is_numeric($val)) {

@@ -12,7 +12,7 @@ use ParagonIE\Ionizer\Contract\FilterInterface;
 class InputFilter implements FilterInterface
 {
     /**
-     * @var mixed
+     * @var string|int|float|bool|array|null
      */
     protected $default;
 
@@ -64,12 +64,11 @@ class InputFilter implements FilterInterface
     /**
      * Set the default value (not applicable to booleans)
      *
-     * @param mixed $value
+     * @param string|int|float|bool|array|null $value
      * @return FilterInterface
      */
     public function setDefault($value): FilterInterface
     {
-        /** @psalm-suppress MixedAssignment */
         $this->default = $value;
         return $this;
     }
@@ -95,24 +94,29 @@ class InputFilter implements FilterInterface
      */
     public function process($data = null)
     {
-        /** @psalm-suppress MixedAssignment */
+        /** @var string|int|float|bool|array|null $data */
         $data = $this->applyCallbacks($data, 0);
         if ($data === null) {
-            /** @psalm-suppress MixedAssignment */
+            /** @var string|int|float|bool|array|null $data */
             $data = $this->default;
         }
 
         // For type strictness:
         switch ($this->type) {
             case 'array':
+                /** @var array $data */
                 return (array) $data;
             case 'bool':
+                /** @var bool $data */
                 return (bool) $data;
             case 'float':
+                /** @var float $data */
                 return (float) $data;
             case 'int':
+                /** @var int $data */
                 return (int) $data;
             case 'string':
+                /** @var string $data */
                 return (string) $data;
             default:
                 return $data;
@@ -138,10 +142,8 @@ class InputFilter implements FilterInterface
             return $data;
         }
         $func = $this->callbacks[$offset];
-        if (\is_callable($func)) {
-            /** @psalm-suppress MixedAssignment */
-            $data = $func($data);
-        }
+        /** @var string|int|float|bool|array|null $data */
+        $data = $func($data);
         return $this->applyCallbacks($data, $offset + 1);
     }
 
