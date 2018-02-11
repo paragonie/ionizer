@@ -11,7 +11,7 @@ use ParagonIE\Ionizer\Contract\{
  * Class InputFilterContainer
  *
  * Contains a set of filter rules, useful for enforcing a strict type on
- * unstrucutred data (e.g. HTTP POST parameters).
+ * unstructured data (e.g. HTTP POST parameters).
  *
  * @package ParagonIE\Ionizer
  */
