@@ -51,6 +51,7 @@ class IntArrayFilter extends ArrayFilter
              * @var string|int|float|bool|array|null $val
              */
             foreach ($data as $key => $val) {
+                /** @psalm-suppress DocblockTypeContradiction */
                 if (\is_array($val)) {
                     throw new \TypeError(
                         \sprintf('Expected a 1-dimensional array (%s).', $this->index)
