@@ -92,8 +92,7 @@ abstract class InputFilterContainer implements FilterContainerInterface
                 }
             }
         }
-
-        return $filtered;
+        return $multiDimensional;
     }
 
     /**
