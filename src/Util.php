@@ -11,8 +11,8 @@ abstract class Util
     /**
      * A wrapper for explode($a, trim($b, $a))
      *
-     * @param $str
-     * @param $token
+     * @param string $str
+     * @param string $token
      * @return array<int, string>
      */
     public static function chunk(string $str, string $token = '/'): array
