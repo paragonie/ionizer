@@ -2,6 +2,7 @@
 
 use ParagonIE\Ionizer\Filter\WhiteList;
 use ParagonIE\Ionizer\GeneralFilterContainer;
+use ParagonIE\Ionizer\InvalidDataException;
 use PHPUnit\Framework\TestCase;
 
 
@@ -13,6 +14,7 @@ class WhiteListTest extends TestCase
     /**
      * @covers WhiteList
      * @throws Error
+     * @throws InvalidDataException
      */
     public function testWhiteList()
     {

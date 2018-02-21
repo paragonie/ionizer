@@ -10,6 +10,7 @@ namespace ParagonIE\Ionizer\Filter;
 
 use ParagonIE\Ionizer\Contract\FilterInterface;
 use ParagonIE\Ionizer\InputFilter;
+use ParagonIE\Ionizer\InvalidDataException;
 
 /**
  * Class BoolFilter
@@ -33,6 +34,7 @@ class BoolFilter extends InputFilter
      * @param mixed $data
      * @return bool
      * @throws \TypeError
+     * @throws InvalidDataException
      */
     public function process($data = null)
     {

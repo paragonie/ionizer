@@ -9,6 +9,7 @@ use ParagonIE\Ionizer\Filter\{
     StringArrayFilter
 };
 use ParagonIE\Ionizer\GeneralFilterContainer;
+use ParagonIE\Ionizer\InvalidDataException;
 use PHPUnit\Framework\TestCase;
 
 
@@ -20,6 +21,7 @@ class ArrayFilterTest extends TestCase
     /**
      * @covers BoolArrayFilter
      * @throws Error
+     * @throws InvalidDataException
      */
     public function testBoolArrayFilter()
     {
@@ -69,6 +71,7 @@ class ArrayFilterTest extends TestCase
     /**
      * @covers FloatArrayFilter
      * @throws Error
+     * @throws InvalidDataException
      */
     public function testFloatArrayFilter()
     {
@@ -115,6 +118,7 @@ class ArrayFilterTest extends TestCase
     /**
      * @covers IntArrayFilter
      * @throws Error
+     * @throws InvalidDataException
      */
     public function testIntArrayFilter()
     {
@@ -166,6 +170,7 @@ class ArrayFilterTest extends TestCase
     /**
      * @throws Error
      * @throws Exception
+     * @throws InvalidDataException
      */
     public function testStrictArrayFilter()
     {
@@ -302,6 +307,7 @@ class ArrayFilterTest extends TestCase
     /**
      * @covers StringArrayFilter
      * @throws Error
+     * @throws InvalidDataException
      */
     public function testStringArrayFilter()
     {

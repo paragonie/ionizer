@@ -53,6 +53,7 @@ abstract class InputFilterContainer implements FilterContainerInterface
      * @param mixed $multiDimensional
      * @return mixed
      * @throws \Error
+     * @throws InvalidDataException
      */
     public function filterValue(string $key, $multiDimensional)
     {
@@ -155,6 +156,7 @@ abstract class InputFilterContainer implements FilterContainerInterface
      * @param array $dataInput
      * @return array
      * @throws \Error
+     * @throws InvalidDataException
      */
     public function __invoke(array $dataInput = []): array
     {

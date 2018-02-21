@@ -90,6 +90,7 @@ class InputFilter implements FilterInterface
      *
      * @param mixed $data
      * @return mixed
+     * @throws InvalidDataException
      * @throws \TypeError
      */
     public function process($data = null)
@@ -129,6 +130,7 @@ class InputFilter implements FilterInterface
      * @param mixed $data
      * @param int $offset
      * @return mixed
+     * @throws InvalidDataException
      */
     public function applyCallbacks($data = null, int $offset = 0)
     {

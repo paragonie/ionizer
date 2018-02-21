@@ -2,6 +2,8 @@
 declare(strict_types=1);
 namespace ParagonIE\Ionizer\Contract;
 
+use ParagonIE\Ionizer\InvalidDataException;
+
 /**
  * Interface FilterInterface
  * @package ParagonIE\Ionizer\Contract
@@ -37,6 +39,7 @@ interface FilterInterface
      *
      * @param mixed $data
      * @return mixed
+     * @throws InvalidDataException
      */
     public function process($data);
 

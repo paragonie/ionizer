@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace ParagonIE\Ionizer\Filter;
 
 use ParagonIE\Ionizer\InputFilter;
+use ParagonIE\Ionizer\InvalidDataException;
 
 /**
  * Class ArrayFilter
@@ -26,6 +27,7 @@ class ArrayFilter extends InputFilter
      * @param mixed $data
      * @return array
      * @throws \TypeError
+     * @throws InvalidDataException
      */
     public function process($data = null)
     {

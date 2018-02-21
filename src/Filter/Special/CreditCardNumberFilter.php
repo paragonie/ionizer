@@ -35,7 +35,7 @@ class CreditCardNumberFilter extends StringFilter
             throw new InvalidDataException('Invalid credit card number (invalid length)');
         }
         /** @var array<int, string> $split */
-        $split = str_split($stripped, 1);
+        $split = \str_split($stripped, 1);
 
         /** @var int $calc */
         $calc = 0;

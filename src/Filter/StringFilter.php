@@ -46,6 +46,7 @@ class StringFilter extends InputFilter
      * @param mixed $data
      * @return string
      * @throws \TypeError
+     * @throws InvalidDataException
      */
     public function process($data = null)
     {

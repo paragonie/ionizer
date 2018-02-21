@@ -2,16 +2,11 @@
 
 use ParagonIE\Ionizer\Filter\{
     BoolFilter,
-    BoolArrayFilter,
     FloatFilter,
-    FloatArrayFilter,
     IntFilter,
-    IntArrayFilter,
-    StringFilter,
-    StrictArrayFilter,
-    StringArrayFilter,
-    WhiteList
+    StringFilter
 };
+use ParagonIE\Ionizer\InvalidDataException;
 use ParagonIE\Ionizer\GeneralFilterContainer;
 
 use PHPUnit\Framework\TestCase;
@@ -24,6 +19,7 @@ class FilterTest extends TestCase
     /**
      * @covers BoolFilter
      * @throws Error
+     * @throws InvalidDataException
      */
     public function testBoolFilter()
     {
@@ -63,6 +59,7 @@ class FilterTest extends TestCase
     /**
      * @covers FloatFilter
      * @throws Error
+     * @throws InvalidDataException
      */
     public function testFloatFilter()
     {
@@ -142,6 +139,7 @@ class FilterTest extends TestCase
     /**
      * @covers IntFilter
      * @throws Error
+     * @throws InvalidDataException
      */
     public function testIntFilter()
     {
@@ -234,6 +232,7 @@ class FilterTest extends TestCase
     /**
      * @covers StringFilter
      * @throws Error
+     * @throws InvalidDataException
      */
     public function testStringFilter()
     {

@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace ParagonIE\Ionizer\Filter;
 
 use ParagonIE\Ionizer\Contract\FilterInterface;
+use ParagonIE\Ionizer\InvalidDataException;
 use ParagonIE\Ionizer\Util;
 
 /**
@@ -33,6 +34,7 @@ class StrictArrayFilter extends ArrayFilter implements FilterInterface
      * @param int $offset
      * @return mixed
      * @throws \TypeError
+     * @throws InvalidDataException
      */
     public function applyCallbacks($data = null, int $offset = 0)
     {

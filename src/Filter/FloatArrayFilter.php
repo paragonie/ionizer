@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace ParagonIE\Ionizer\Filter;
 
+use ParagonIE\Ionizer\InvalidDataException;
 use ParagonIE\Ionizer\Util;
 
 /**
@@ -27,6 +28,7 @@ class FloatArrayFilter extends ArrayFilter
      * @param int $offset
      * @return mixed
      * @throws \TypeError
+     * @throws InvalidDataException
      */
     public function applyCallbacks($data = null, int $offset = 0)
     {
