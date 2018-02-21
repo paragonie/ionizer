@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace ParagonIE\Ionizer\Filter\Special;
 
+use ParagonIE\ConstantTime\Binary;
 use ParagonIE\Ionizer\Filter\StringFilter;
 use ParagonIE\Ionizer\InvalidDataException;
 
@@ -17,6 +18,8 @@ class CreditCardNumberFilter extends StringFilter
     }
 
     /**
+     * Validate a credit card number, based on input length and Luhn's Algorithm
+     *
      * @param string $input
      *
      * @return string
@@ -26,6 +29,11 @@ class CreditCardNumberFilter extends StringFilter
     {
         // Strip all non-decimal characters
         $stripped = \preg_replace('/[^0-9]/', '', $input);
+        /** @var int $length */
+        $length = Binary::safeStrlen($stripped);
+        if ($length < 13 || $length > 19) {
+            throw new InvalidDataException('Invalid credit card number (invalid length)');
+        }
         /** @var array<int, string> $split */
         $split = str_split($stripped, 1);
 
@@ -43,7 +51,7 @@ class CreditCardNumberFilter extends StringFilter
         }
 
         if ($calc % 10 !== 0) {
-            throw new InvalidDataException('Invalid credit card number');
+            throw new InvalidDataException('Invalid credit card number (Luhn)');
         }
         return $stripped;
     }
