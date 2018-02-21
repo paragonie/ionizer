@@ -18,7 +18,7 @@ use ParagonIE\Ionizer\Contract\{
 abstract class InputFilterContainer implements FilterContainerInterface
 {
     /**
-     * @var array<mixed, mixed>
+     * @var array<string, array<mixed, FilterInterface>>
      */
     protected $filterMap = [];
 

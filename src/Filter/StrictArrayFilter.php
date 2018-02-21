@@ -33,8 +33,6 @@ class StrictArrayFilter extends ArrayFilter implements FilterInterface
      * @param int $offset
      * @return mixed
      * @throws \TypeError
-     * @psalm-suppress MixedArrayOffset
-     * @psalm-suppress RedundantCondition
      */
     public function applyCallbacks($data = null, int $offset = 0)
     {
