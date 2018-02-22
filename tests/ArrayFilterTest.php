@@ -1,8 +1,12 @@
 <?php
 
 use ParagonIE\Ionizer\Filter\{
+    ArrayFilter,
+    BoolFilter,
     BoolArrayFilter,
+    FloatFilter,
     FloatArrayFilter,
+    IntFilter,
     IntArrayFilter,
     StringFilter,
     StrictArrayFilter,
@@ -18,6 +22,104 @@ use PHPUnit\Framework\TestCase;
  */
 class ArrayFilterTest extends TestCase
 {
+    /**
+     *
+     */
+    public function setUp()
+    {
+        if (!\class_exists('GenericFilterContainer')) {
+            require_once __DIR__ . '/Errata/GenericFilterContainer.php';
+        }
+    }
+
+    /**
+     * This tests the normal use of the array filter, as well as the alternative separators
+     *
+     * @throws Error
+     * @throws InvalidDataException
+     */
+    public function testArrayFilter()
+    {
+        $filter = (new GeneralFilterContainer())
+            ->addFilter('test', new ArrayFilter())
+            ->addFilter('test.apple', new BoolFilter())
+            ->addFilter('test.boy', new FloatFilter())
+            ->addFilter('test.cat', new IntFilter())
+            ->addFilter('test.dog', new StringFilter());
+
+        if (!($filter instanceof GeneralFilterContainer)) {
+            $this->fail('Type error');
+        }
+
+        $before = [
+            'test' => [
+                'apple' => 1,
+                'boy' => '1.345',
+                'cat' => '25519',
+                'dog' => 3.14159265
+            ]
+        ];
+        $this->assertEquals(
+            [
+                'test' => [
+                    'apple' => true,
+                    'boy' => 1.345,
+                    'cat' => 25519,
+                    'dog' => '3.14159265'
+                ]
+            ],
+            $filter($before)
+        );
+
+        $wrong = (new GenericFilterContainer())
+            ->addFilter('test', new ArrayFilter())
+            ->addFilter('test.apple', new BoolFilter())
+            ->addFilter('test.boy', new FloatFilter())
+            ->addFilter('test.cat', new IntFilter())
+            ->addFilter('test.dog', new StringFilter());
+
+        if (!($wrong instanceof GeneralFilterContainer)) {
+            $this->fail('Type error');
+        }
+        $this->assertEquals(
+            [
+                'test' => [
+                    'apple' => true,
+                    'boy' => 1.345,
+                    'cat' => 25519,
+                    'dog' => '3.14159265'
+                ],
+                'test.apple' => false,
+                'test.boy' => 0.0,
+                'test.cat' => 0,
+                'test.dog' => ''
+            ],
+            $wrong($before)
+        );
+
+        $corrected = (new GenericFilterContainer())
+            ->addFilter('test', new ArrayFilter())
+            ->addFilter('test::apple', new BoolFilter())
+            ->addFilter('test::boy', new FloatFilter())
+            ->addFilter('test::cat', new IntFilter())
+            ->addFilter('test::dog', new StringFilter());
+
+        if (!($corrected instanceof GeneralFilterContainer)) {
+            $this->fail('Type error');
+        }
+        $this->assertEquals(
+            [
+                'test' => [
+                    'apple' => true,
+                    'boy' => 1.345,
+                    'cat' => 25519,
+                    'dog' => '3.14159265'
+                ]
+            ],
+            $corrected($before)
+        );
+    }
+
     /**
      * @covers BoolArrayFilter
      * @throws Error

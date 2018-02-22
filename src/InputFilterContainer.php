@@ -17,6 +17,9 @@ use ParagonIE\Ionizer\Contract\{
  */
 abstract class InputFilterContainer implements FilterContainerInterface
 {
+    /** @const string SEPARATOR */
+    const SEPARATOR = '.';
+
     /**
      * @var array<string, array<mixed, FilterInterface>>
      */
@@ -58,7 +61,7 @@ abstract class InputFilterContainer implements FilterContainerInterface
     public function filterValue(string $key, $multiDimensional)
     {
         /** @var array<int, string> $pieces */
-        $pieces = Util::chunk($key, '.');
+        $pieces = Util::chunk($key, (string) static::SEPARATOR);
         /** @var array|string $filtered */
         $filtered =& $multiDimensional;
 
@@ -109,7 +112,7 @@ abstract class InputFilterContainer implements FilterContainerInterface
     public function getUnfilteredValue(string $key, array $multiDimensional = [])
     {
         /** @var array<ing, string> $pieces */
-        $pieces = Util::chunk($key, '.');
+        $pieces = Util::chunk($key, (string) static::SEPARATOR);
 
         /** @var string|array<string, string|array> $value */
         $value = $multiDimensional;
