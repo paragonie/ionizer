@@ -34,7 +34,7 @@ class DateTimeFilter extends StringFilter
     /**
      * Apply all of the callbacks for this filter.
      *
-     * @param string|null $data
+     * @param mixed|null $data
      * @param int $offset
      * @return mixed
      * @throws \TypeError
