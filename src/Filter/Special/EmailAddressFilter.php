@@ -31,13 +31,13 @@ class EmailAddressFilter extends StringFilter
         }
         $pos = \strpos($filtered, '@');
         if ($pos === false) {
-            throw new InvalidDataException('Invalid email address: ' . $input);
-        }
-        if ($pos === 0) {
-            throw new InvalidDataException('Invalid email address: ' . $input);
+            throw new InvalidDataException('Invalid email address (no @): ' . $input);
         }
         if (\substr_count($filtered, '@') !== 1) {
-            throw new InvalidDataException('Invalid email address: ' . $input);
+            throw new InvalidDataException('Invalid email address (more than one @): ' . $input);
+        }
+        if ($pos === 0) {
+            throw new InvalidDataException('Invalid email address (no username): ' . $input);
         }
         /**
          * @var string $username
@@ -45,17 +45,14 @@ class EmailAddressFilter extends StringFilter
          */
         list ($username, $domain) = \explode('@', $filtered);
         if (\preg_match('#^\.#', $username) || \preg_match('#\.$#', $username)) {
-            throw new InvalidDataException('Invalid email address: ' . $input);
+            throw new InvalidDataException('Invalid email address (leading or trailing dot): ' . $input);
         }
         if (\strpos($filtered, '..') !== false) {
-            throw new InvalidDataException('Invalid email address: ' . $input);
-        }
-        if (!\filter_var($domain, FILTER_VALIDATE_DOMAIN)) {
-            throw new InvalidDataException('Invalid email address: ' . $input);
+            throw new InvalidDataException('Invalid email address (consecutive dots): ' . $input);
         }
         if (!\preg_match('#^\[?' . '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' . '\]?$#', $domain)) {
             if (!\checkdnsrr($domain, 'MX')) {
-                throw new InvalidDataException('Invalid email address: ' . $input);
+                throw new InvalidDataException('Invalid email address (no MX record on domain): ' . $input);
             }
         }
 
