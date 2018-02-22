@@ -1,11 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Scott
- * Date: 2/5/2018
- * Time: 3:07 PM
- */
-
+declare(strict_types=1);
 namespace ParagonIE\Ionizer\Filter;
 
 use ParagonIE\Ionizer\Contract\FilterInterface;
