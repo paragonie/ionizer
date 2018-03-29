@@ -44,8 +44,9 @@ class DateTimeFilter extends StringFilter
     {
         if ($offset === 0) {
             if (!\is_null($data)) {
+                $data = (string) $data;
                 try {
-                    /** @var string $dt */
+                    /** @var string $data */
                     $data = (new \DateTime($data, $this->tz))
                         ->format($this->dateTimeFormat);
                 } catch (\Exception $ex) {

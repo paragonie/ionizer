@@ -11,6 +11,9 @@ use ParagonIE\Ionizer\InvalidDataException;
  */
 class EmailAddressFilter extends StringFilter
 {
+    /**
+     * @var bool $checkDNS
+     */
     protected $checkDNS = true;
 
     public function __construct()

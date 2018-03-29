@@ -8,6 +8,7 @@
         <directory name="src" />
     </projectFiles>
     <issueHandlers>
+        <MoreSpecificImplementedParamType errorLevel="info" />
         <RedundantConditionGivenDocblockType errorLevel="info" />
     </issueHandlers>
 </psalm>
