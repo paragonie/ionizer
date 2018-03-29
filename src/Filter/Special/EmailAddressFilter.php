@@ -11,9 +11,22 @@ use ParagonIE\Ionizer\InvalidDataException;
  */
 class EmailAddressFilter extends StringFilter
 {
+    protected $checkDNS = true;
+
     public function __construct()
     {
-        $this->addCallback([__CLASS__, 'validateEmailAddress']);
+        $this->addThisCallback('validateEmailAddress');
+    }
+
+    /**
+     * @param bool $value
+     *
+     * @return self
+     */
+    public function setCheckDNS(bool $value): self
+    {
+        $this->checkDNS = $value;
+        return $this;
     }
 
     /**
@@ -22,7 +35,7 @@ class EmailAddressFilter extends StringFilter
      * @return string
      * @throws InvalidDataException
      */
-    public static function validateEmailAddress(string $input): string
+    public function validateEmailAddress(string $input): string
     {
         /** @var string|bool $filtered */
         $filtered = \filter_var($input, FILTER_VALIDATE_EMAIL);
@@ -50,9 +63,11 @@ class EmailAddressFilter extends StringFilter
         if (\strpos($filtered, '..') !== false) {
             throw new InvalidDataException('Invalid email address (consecutive dots): ' . $input);
         }
-        if (!\preg_match('#^\[?' . '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' . '\]?$#', $domain)) {
-            if (!\checkdnsrr($domain, 'MX')) {
-                throw new InvalidDataException('Invalid email address (no MX record on domain): ' . $input);
+        if ($this->checkDNS) {
+            if (!\preg_match('#^\[?' . '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' . '\]?$#', $domain)) {
+                if (!\checkdnsrr($domain, 'MX')) {
+                    throw new InvalidDataException('Invalid email address (no MX record on domain): ' . $input);
+                }
             }
         }
 

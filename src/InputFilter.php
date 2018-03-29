@@ -32,6 +32,11 @@ class InputFilter implements FilterInterface
     protected $callbacks = [];
 
     /**
+     * @var string[]
+     */
+    protected $thisCallbacks = [];
+
+    /**
      * Sets the expected input type (e.g. string, boolean)
      *
      * @param string $typeIndicator
@@ -86,6 +91,21 @@ class InputFilter implements FilterInterface
     }
 
     /**
+     * Add a callback to this filter (supports more than one)
+     *
+     * @param string $func
+     * @return FilterInterface
+     */
+    public function addThisCallback(string $func): FilterInterface
+    {
+        if (!\method_exists($this, $func)) {
+            throw new \Error('Method ' . $func . ' does not exist on class ' . \get_class($this));
+        }
+        $this->thisCallbacks[] = $func;
+        return $this;
+    }
+
+    /**
      * Process data using the filter rules.
      *
      * @param mixed $data
@@ -97,6 +117,8 @@ class InputFilter implements FilterInterface
     {
         /** @var string|int|float|bool|array|null $data */
         $data = $this->applyCallbacks($data, 0);
+        /** @var string|int|float|bool|array|null $data */
+        $data = $this->applyThisCallbacks($data, 0);
         if ($data === null) {
             /** @var string|int|float|bool|array|null $data */
             $data = $this->default;
@@ -146,6 +168,25 @@ class InputFilter implements FilterInterface
         $func = $this->callbacks[$offset];
         /** @var string|int|float|bool|array|null $data */
         $data = $func($data);
+        return $this->applyCallbacks($data, $offset + 1);
+    }
+    /**
+     * Apply all of the callbacks for this filter.
+     *
+     * @param mixed $data
+     * @param int $offset
+     * @return mixed
+     * @throws InvalidDataException
+     */
+    public function applyThisCallbacks($data = null, int $offset = 0)
+    {
+        if ($offset >= \count($this->thisCallbacks)) {
+            return $data;
+        }
+        /** @var string $func */
+        $func = $this->thisCallbacks[$offset];
+        /** @var string|int|float|bool|array|null $data */
+        $data = $this->$func($data);
         return $this->applyCallbacks($data, $offset + 1);
     }
 

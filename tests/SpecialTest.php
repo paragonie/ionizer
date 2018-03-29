@@ -239,5 +239,19 @@ class SpecialTest extends TestCase
             } catch (InvalidDataException $ex) {
             }
         }
+
+        // Optional: Disable DNS check
+        $noDNSfilter = (new GeneralFilterContainer())
+            ->addFilter('email', (new EmailAddressFilter())->setCheckDNS(false));
+        if (!($noDNSfilter instanceof GeneralFilterContainer)) {
+            $this->fail('Type error');
+        }
+
+        try {
+            $filter(['email' => 'email@domain.web']);
+            $this->fail('Invalid email address accepted: ' . 'email@domain.web');
+        } catch (InvalidDataException $ex) {
+        }
+        $noDNSfilter(['email' => 'email@domain.web']);
     }
 }
