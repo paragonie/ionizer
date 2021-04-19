@@ -1,5 +1,6 @@
 {
   "name": "paragonie/ionizer",
+  "description": "Powerful input value filtering for PHP applications",
   "authors": [
     {
       "name": "Paragon Initiative Enterprises",
