@@ -6,10 +6,10 @@ use ParagonIE\Ionizer\InputFilter;
 use ParagonIE\Ionizer\InvalidDataException;
 
 /**
- * Class WhiteList
+ * Class AllowList
  * @package ParagonIE\Ionizer\Filter
  */
-class WhiteList extends InputFilter
+class AllowList extends InputFilter
 {
     /**
      * @var array<int, mixed>
@@ -17,7 +17,7 @@ class WhiteList extends InputFilter
     protected $allowedValues = [];
 
     /**
-     * WhiteList constructor.
+     * AllowList constructor.
      * @param scalar ...$values
      */
     public function __construct(...$values)

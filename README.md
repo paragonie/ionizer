@@ -29,7 +29,7 @@ composer require paragonie/ionizer
 use ParagonIE\Ionizer\GeneralFilterContainer;
 use ParagonIE\Ionizer\Filter\{
     StringFilter,
-    WhiteList
+    AllowList
 };
 
 // Define properties to filter:
@@ -41,7 +41,7 @@ $ic->addFilter(
     ->addFilter('passphrase', new StringFilter())
     ->addFilter(
         'domain',
-        new WhiteList('US-1', 'US-2', 'EU-1', 'EU-2')
+        new AllowList('US-1', 'US-2', 'EU-1', 'EU-2')
     );
 
 // Invoke the filter container on the array to get the filtered result:
