@@ -23,9 +23,9 @@ use PHPUnit\Framework\TestCase;
 class ArrayFilterTest extends TestCase
 {
     /**
-     *
+     * @before
      */
-    public function setUp()
+    public function before()
     {
         if (!\class_exists('GenericFilterContainer')) {
             require_once __DIR__ . '/Errata/GenericFilterContainer.php';

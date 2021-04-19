@@ -57,6 +57,8 @@ abstract class InputFilterContainer implements FilterContainerInterface
      * @return mixed
      * @throws \Error
      * @throws InvalidDataException
+     *
+     * @psalm-suppress UnusedVariable
      */
     public function filterValue(string $key, $multiDimensional)
     {
@@ -111,7 +113,7 @@ abstract class InputFilterContainer implements FilterContainerInterface
      */
     public function getUnfilteredValue(string $key, array $multiDimensional = [])
     {
-        /** @var array<ing, string> $pieces */
+        /** @var array<string, string> $pieces */
         $pieces = Util::chunk($key, (string) static::SEPARATOR);
 
         /** @var string|array<string, string|array> $value */

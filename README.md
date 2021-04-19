@@ -1,6 +1,6 @@
 # Ionizer
 
-[![Build Status](https://travis-ci.org/paragonie/ionizer.svg?branch=master)](https://travis-ci.org/paragonie/ionizer)
+[![Build Status](https://github.com/paragonie/ionizer/actions/workflows/ci.yml/badge.svg)](https://github.com/ionizer/actions)
 [![Latest Stable Version](https://poser.pugx.org/paragonie/ionizer/v/stable)](https://packagist.org/packages/paragonie/ionizer)
 [![Latest Unstable Version](https://poser.pugx.org/paragonie/ionizer/v/unstable)](https://packagist.org/packages/paragonie/ionizer)
 [![License](https://poser.pugx.org/paragonie/ionizer/license)](https://packagist.org/packages/paragonie/ionizer)
@@ -29,7 +29,7 @@ composer require paragonie/ionizer
 use ParagonIE\Ionizer\GeneralFilterContainer;
 use ParagonIE\Ionizer\Filter\{
     StringFilter,
-    WhiteList
+    AllowList
 };
 
 // Define properties to filter:
@@ -41,7 +41,7 @@ $ic->addFilter(
     ->addFilter('passphrase', new StringFilter())
     ->addFilter(
         'domain',
-        new WhiteList('US-1', 'US-2', 'EU-1', 'EU-2')
+        new AllowList('US-1', 'US-2', 'EU-1', 'EU-2')
     );
 
 // Invoke the filter container on the array to get the filtered result:

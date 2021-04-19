@@ -1,18 +1,17 @@
 <?php
 
-use ParagonIE\Ionizer\Filter\WhiteList;
+use ParagonIE\Ionizer\Filter\AllowList;
 use ParagonIE\Ionizer\GeneralFilterContainer;
 use ParagonIE\Ionizer\InvalidDataException;
 use PHPUnit\Framework\TestCase;
 
 
 /**
- * Class WhiteListTest
+ * Class AllowListTest
  */
-class WhiteListTest extends TestCase
+class AllowListTest extends TestCase
 {
     /**
-     * @covers WhiteList
      * @throws Error
      * @throws InvalidDataException
      */
@@ -21,7 +20,7 @@ class WhiteListTest extends TestCase
         $filter = (new GeneralFilterContainer())
             ->addFilter(
                 'test1',
-                (new WhiteList(
+                (new AllowList(
                     'abc',
                     'def',
                     'ghi'
