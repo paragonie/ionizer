@@ -19,12 +19,12 @@
   },
   "license": "ISC",
   "require": {
-    "php": "^7",
+    "php": "^7|^8",
     "paragonie/constant_time_encoding": "^2.1"
   },
   "require-dev": {
-    "phpunit/phpunit": "^6.5",
-    "vimeo/psalm": "^0|^1|^2"
+    "phpunit/phpunit": "^6.5|^7|^8|^9",
+    "vimeo/psalm": "^1|^2|^3|^4"
   },
   "support": {
     "email": "security@paragonie.com",

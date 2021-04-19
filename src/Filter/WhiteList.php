@@ -18,7 +18,7 @@ class WhiteList extends InputFilter
 
     /**
      * WhiteList constructor.
-     * @param mixed ...$values
+     * @param scalar ...$values
      */
     public function __construct(...$values)
     {
@@ -26,7 +26,7 @@ class WhiteList extends InputFilter
     }
 
     /**
-     * @param array<int, string|int|float|bool|null> values
+     * @param array<int, scalar> $values
      * @return self
      */
     protected function addToWhiteList(...$values)

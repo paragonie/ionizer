@@ -6,9 +6,16 @@
 >
     <projectFiles>
         <directory name="src" />
+        <ignoreFiles>
+            <directory name="vendor" />
+        </ignoreFiles>
     </projectFiles>
     <issueHandlers>
         <MoreSpecificImplementedParamType errorLevel="info" />
         <RedundantConditionGivenDocblockType errorLevel="info" />
+        <NonInvariantDocblockPropertyType errorLevel="info" />
+        <RedundantCast errorLevel="info" />
+        <RedundantCastGivenDocblockType errorLevel="info" />
+        <UnnecessaryVarAnnotation errorLevel="info" />
     </issueHandlers>
 </psalm>
