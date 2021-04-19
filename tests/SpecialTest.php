@@ -185,7 +185,7 @@ class SpecialTest extends TestCase
     public function testEmailAddressFilter()
     {
         $filter = (new GeneralFilterContainer())
-            ->addFilter('email', new EmailAddressFilter());
+            ->addFilter('email', (new EmailAddressFilter())->setCheckDNS(false));
 
         if (!($filter instanceof GeneralFilterContainer)) {
             $this->fail('Type error');

@@ -1,6 +1,6 @@
 # Ionizer
 
-[![Build Status](https://github.com/paragonie/ionizer/actions/workflows/ci.yml/badge.svg)](https://github.com/ionizer/actions)
+[![Build Status](https://github.com/paragonie/ionizer/actions/workflows/ci.yml/badge.svg)](https://github.com/paragonie/ionizer/actions)
 [![Latest Stable Version](https://poser.pugx.org/paragonie/ionizer/v/stable)](https://packagist.org/packages/paragonie/ionizer)
 [![Latest Unstable Version](https://poser.pugx.org/paragonie/ionizer/v/unstable)](https://packagist.org/packages/paragonie/ionizer)
 [![License](https://poser.pugx.org/paragonie/ionizer/license)](https://packagist.org/packages/paragonie/ionizer)
