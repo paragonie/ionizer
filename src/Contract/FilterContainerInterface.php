@@ -15,4 +15,9 @@ interface FilterContainerInterface
      */
     public function addFilter(string $path, FilterInterface $filter): self;
 
+    /**
+     * @param string $path
+     * @return array<array-key, FilterInterface>
+     */
+    public function getFiltersForPath(string $path);
 }

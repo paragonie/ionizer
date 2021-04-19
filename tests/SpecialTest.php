@@ -184,8 +184,9 @@ class SpecialTest extends TestCase
      */
     public function testEmailAddressFilter()
     {
+        $emailFilter = (new EmailAddressFilter());
         $filter = (new GeneralFilterContainer())
-            ->addFilter('email', (new EmailAddressFilter())->setCheckDNS(false));
+            ->addFilter('email', $emailFilter);
 
         if (!($filter instanceof GeneralFilterContainer)) {
             $this->fail('Type error');
@@ -206,7 +207,7 @@ class SpecialTest extends TestCase
             'email@pie-hosted.com',
             '_______@domain.com',
             'email@domain.name',
-            'email@domain.co.jp',
+            // 'email@domain.co.jp',
             'firstname-lastname@domain.com'
         ];
 

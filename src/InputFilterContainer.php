@@ -50,6 +50,18 @@ abstract class InputFilterContainer implements FilterContainerInterface
     }
 
     /**
+     * @param string $path
+     * @return array<array-key, FilterInterface>
+     */
+    public function getFiltersForPath(string $path)
+    {
+        if (!isset($this->filterMap[$path])) {
+            $this->filterMap[$path] = [];
+        }
+        return $this->filterMap[$path];
+    }
+
+    /**
      * Use firstlevel.second_level.thirdLevel to find indices in an array
      *
      * @param string $key
