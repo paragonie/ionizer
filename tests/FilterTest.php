@@ -272,4 +272,19 @@ class FilterTest extends TestCase
         } catch (\TypeError $ex) {
         }
     }
+
+    public function testStringRegex()
+    {
+        $filter = new GeneralFilterContainer();
+        $filter->addFilter(
+            'test1',
+            (new StringFilter())->setPattern('^[a-z]+$')
+        );
+        $after = $filter(['test1' => 'abcdef']);
+
+        $this->assertSame(
+            ['test1' => 'abcdef'],
+            $after
+        );
+    }
 }

@@ -82,7 +82,7 @@ class StringFilter extends InputFilter
         if (empty($pattern)) {
             $this->pattern = '';
         } else {
-            $this->pattern = '#' . \preg_quote($pattern, '#') . '#';
+            $this->pattern = '#' . \preg_replace('/([^\\\\])\#/', '$1\\#', $pattern) . '#';
         }
         return $this;
     }
