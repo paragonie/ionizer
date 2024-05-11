@@ -6,12 +6,17 @@
 [![License](https://poser.pugx.org/paragonie/ionizer/license)](https://packagist.org/packages/paragonie/ionizer)
 [![Downloads](https://img.shields.io/packagist/dt/paragonie/ionizer.svg)](https://packagist.org/packages/paragonie/ionizer)
 
-Input filtering system used in [CMS Airship](https://github.com/paragonie/airship), now available
-for use in any project. **Requires PHP 7 or higher.**
+Ionizer provides strict typing and input validation for dynamic inputs (i.e. HTTP request parameters).
+**Requires PHP 7 or higher.**
 
 ## What is Ionizer?
 
 Ionizer is a structured input filtering system ideal for HTTP form data.
+
+### Why is Ionizer important?
+
+Aside from the benefits of being able to strictly type your applications that accept user input,
+Ionizer makes it easy to mitigate [some NoSQL injection techniques](https://www.php.net/manual/en/mongodb.security.request_injection.php).
 
 ## Installing
 
