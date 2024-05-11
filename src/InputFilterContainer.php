@@ -79,24 +79,32 @@ abstract class InputFilterContainer implements FilterContainerInterface
         /** @var array|string $filtered */
         $filtered =& $multiDimensional;
 
-        /**
-         * @security This shouldn't be escapable. We know eval is evil, but
-         *           there's not a more elegant way to process this in PHP.
-         */
+        $var = '';
         if (\is_array($multiDimensional)) {
             $var = '$multiDimensional';
             foreach ($pieces as $piece) {
+                $_var = substr($var, 1);
+                if (is_null(${$_var})) {
+                    ${$var} = [];
+                }
+
                 $append = '[' . self::sanitize($piece) . ']';
 
+                if (!isset(${$var . $append})) {
+                    ${$var . $append} = null;
+                    $var .= $append;
+                    break;
+                }
                 // Alphabetize the parent array
-                eval(
-                    'if (!isset(' . $var . $append . ')) {' . "\n" .
-                    '    ' . $var . $append . ' = null;' . "\n" .
-                    '}' . "\n" .
-                    '\ksort(' . $var . ');' . "\n"
-                );
+                if (is_array(${$var})) {
+                    ksort(${$var});
+                }
                 $var .= $append;
             }
+            /**
+             * @security This shouldn't be escapable. We know eval is evil, but
+             *           there's not a more elegant way to process this in PHP.
+             */
             eval('$filtered =& ' . $var. ';');
         }
 
