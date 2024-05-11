@@ -84,16 +84,17 @@ abstract class InputFilterContainer implements FilterContainerInterface
             $var = '$multiDimensional';
             foreach ($pieces as $piece) {
                 $_var = substr($var, 1);
-                if (is_null(${$_var})) {
-                    ${$var} = [];
+                if (empty(${$_var})) {
+                    ${$_var} = [];
                 }
+                ksort(${$_var});
 
                 $append = '[' . self::sanitize($piece) . ']';
 
                 if (!isset(${$var . $append})) {
                     ${$var . $append} = null;
                     $var .= $append;
-                    break;
+                    continue;
                 }
                 // Alphabetize the parent array
                 if (is_array(${$var})) {
