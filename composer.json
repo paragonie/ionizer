@@ -18,6 +18,11 @@
       "ParagonIE\\Ionizer\\": "./src"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "ParagonIE\\Ionizer\\Test\\": "./tests"
+    }
+  },
   "license": "ISC",
   "require": {
     "ext-json": "*",
@@ -25,8 +30,7 @@
     "paragonie/constant_time_encoding": "^2.1|^3"
   },
   "require-dev": {
-    "phpunit/phpunit": "^6.5|^7|^8|^9",
-    "vimeo/psalm": "^1|^2|^3|^4"
+    "phpunit/phpunit": "^6.5|^7|^8|^9|^10|^11"
   },
   "scripts": {
     "test": ["phpunit", "psalm"]

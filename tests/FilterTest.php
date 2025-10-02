@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+namespace ParagonIE\Ionizer\Test;
 
 use ParagonIE\Ionizer\Filter\{
     BoolFilter,
@@ -6,18 +8,23 @@ use ParagonIE\Ionizer\Filter\{
     IntFilter,
     StringFilter
 };
+use Error;
 use ParagonIE\Ionizer\InvalidDataException;
 use ParagonIE\Ionizer\GeneralFilterContainer;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Class FilterTest
  */
+#[CoversClass(BoolFilter::class)]
+#[CoversClass(IntFilter::class)]
+#[CoversClass(FloatFilter::class)]
+#[CoversClass(StringFilter::class)]
 class FilterTest extends TestCase
 {
     /**
-     * @covers BoolFilter
      * @throws Error
      * @throws InvalidDataException
      */
@@ -57,7 +64,6 @@ class FilterTest extends TestCase
     }
 
     /**
-     * @covers FloatFilter
      * @throws Error
      * @throws InvalidDataException
      */
@@ -137,7 +143,6 @@ class FilterTest extends TestCase
     }
 
     /**
-     * @covers IntFilter
      * @throws Error
      * @throws InvalidDataException
      */
@@ -230,7 +235,6 @@ class FilterTest extends TestCase
     }
 
     /**
-     * @covers StringFilter
      * @throws Error
      * @throws InvalidDataException
      */
@@ -273,6 +277,9 @@ class FilterTest extends TestCase
         }
     }
 
+    /**
+     * @throws InvalidDataException
+     */
     public function testStringRegex()
     {
         $filter = new GeneralFilterContainer();
