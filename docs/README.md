@@ -2,6 +2,12 @@
 
 This document provides detailed examples for the different input filters available in Ionizer.
 
+**Other Documents**
+
+* [Preventing NoSQL Injection with Ionizer](nosql-injection-prevention.md)
+
+**Contents of This Document**
+
 * [Scalar Type Filters](#scalar-type-filters)
    * [`BoolFilter`](#boolfilter)
    * [`FloatFilter`](#floatfilter)
