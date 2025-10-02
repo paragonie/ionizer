@@ -2,11 +2,11 @@
 declare(strict_types=1);
 namespace ParagonIE\Ionizer\Contract;
 
-interface KeyPolicyInterface
+interface IndexPolicyInterface
 {
     /**
-     * @param array-key $key
+     * @param array-key $index
      * @return bool
      */
-    public function keyIsValid($key): bool;
+    public function indexIsValid($index): bool;
 }
