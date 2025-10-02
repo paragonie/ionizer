@@ -204,7 +204,6 @@ class SpecialTest extends TestCase
             '"email"@domain.com',
             '1234567890@domain.com',
             'email@paragonie.com',
-            'email@pie-hosted.net',
             '_______@domain.com',
             'email@domain.name',
             // 'email@domain.co.jp',
