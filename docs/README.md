@@ -26,7 +26,6 @@ This document provides detailed examples for the different input filters availab
 
 Below is the documentation for scalar type filters available in Ionizer.
 
-
 ### `BoolFilter`
 
 The `BoolFilter` validates a single boolean value.
@@ -124,6 +123,9 @@ try {
 
 Sometimes you need to accept a list of values, rather than a single value. These input filters allow you to limit the
 inputs to a flat, one-dimensional array consisting of specific values.
+
+By default, the array filters only examine the **values, not the keys** of an input array. You can specify 
+[Index Policies](#index-policies) if you interpret the array indices as data too.
 
 ### `BoolArrayFilter`
 
@@ -243,6 +245,80 @@ try {
     $valid = $ic($input);
 } catch (\TypeError $ex) {
     // Handle error
+}
+```
+
+### Index Policies
+
+Ionizer allows for policies to be defined on the indices (a.k.a. keys) of an array.
+
+#### `AnyIndex`
+
+Allows any string or integer index to be used on an array. This is congruent to not specifying an Index Policy at all.
+
+```php
+<?php
+use ParagonIE\Ionizer\GeneralFilterContainer;
+use ParagonIE\Ionizer\IndexPolicy\AnyIndex;
+
+$gfc = new GeneralFilterContainer();
+$gfc->setIndexPolicy(new AnyIndex());
+```
+
+#### `IntegersOnly`
+
+Allows any integer key.
+
+```php
+<?php
+use ParagonIE\Ionizer\GeneralFilterContainer;
+use ParagonIE\Ionizer\IndexPolicy\IntegersOnly;
+
+$gfc = new GeneralFilterContainer();
+$gfc->setIndexPolicy(new IntegersOnly());
+```
+
+#### `StringsOnly`
+
+Allows any string key.
+
+```php
+<?php
+use ParagonIE\Ionizer\GeneralFilterContainer;
+use ParagonIE\Ionizer\IndexPolicy\StringsOnly;
+
+$gfc = new GeneralFilterContainer();
+$gfc->setIndexPolicy(new StringsOnly());
+```
+
+#### `KeyAllowList`
+
+Allows only a specific set of keys.
+
+```php
+<?php
+use ParagonIE\Ionizer\GeneralFilterContainer;
+use ParagonIE\Ionizer\IndexPolicy\IndexAllowList;
+
+$gfc = new GeneralFilterContainer();
+$gfc->setIndexPolicy(new IndexAllowList('foo', 'bar', 'baz'));
+```
+
+#### Custom Index Policies
+
+To create your own index policy, create a class that implements 
+[`IndexPolicyInterface`](../src/Contract/IndexPolicyInterface.php).
+
+```php
+<?php
+use ParagonIE\Ionizer\Contract\IndexPolicyInterface;
+
+class FooPolicy implements IndexPolicyInterface
+{
+    public function indexIsValid($index): bool
+    {
+        return $index === 'foo';
+    }
 }
 ```
 
