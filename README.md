@@ -17,6 +17,7 @@ Ionizer is a structured input filtering system ideal for HTTP form data.
 
 Aside from the benefits of being able to strictly type your applications that accept user input,
 Ionizer makes it easy to mitigate [some NoSQL injection techniques](https://www.php.net/manual/en/mongodb.security.request_injection.php).
+Learn more about [preventing NoSQL injection with Ionizer](docs/nosql-injection-prevention.md).
 
 ## Installing
 
