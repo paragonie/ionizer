@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace ParagonIE\Ionizer\Filter;
 
-use ParagonIE\Ionizer\Contract\KeyPolicyInterface;
+use ParagonIE\Ionizer\Contract\IndexPolicyInterface;
 use ParagonIE\Ionizer\InputFilter;
 use ParagonIE\Ionizer\InvalidDataException;
 
@@ -23,19 +23,19 @@ class ArrayFilter extends InputFilter
     protected $type = 'array';
 
     /**
-     * @var ?KeyPolicyInterface $keyPolicy
+     * @var ?IndexPolicyInterface $indexPolicy
      */
-    protected $keyPolicy = null;
+    protected $indexPolicy = null;
 
     /**
      * Add restrictions to the keys allowed in this array
      *
-     * @param KeyPolicyInterface $keyPolicy
+     * @param IndexPolicyInterface $indexPolicy
      * @return $this
      */
-    public function setKeyPolicy(KeyPolicyInterface $keyPolicy): self
+    public function setIndexPolicy(IndexPolicyInterface $indexPolicy): self
     {
-        $this->keyPolicy = $keyPolicy;
+        $this->indexPolicy = $indexPolicy;
         return $this;
     }
 
@@ -58,10 +58,10 @@ class ArrayFilter extends InputFilter
                 \sprintf('Expected an array (%s).', $this->index)
             );
         }
-        if (!is_null($this->keyPolicy)) {
+        if (!is_null($this->indexPolicy)) {
             $keys = array_keys($data);
             foreach ($keys as $arrayKey) {
-                if (!$this->keyPolicy->keyIsValid($arrayKey)) {
+                if (!$this->indexPolicy->indexIsValid($arrayKey)) {
                     throw new \TypeError(
                         \sprintf("Invalid key (%s) in violation of key policy", $arrayKey)
                     );

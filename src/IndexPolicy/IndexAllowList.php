@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
-namespace ParagonIE\Ionizer\KeyPolicy;
+namespace ParagonIE\Ionizer\IndexPolicy;
 
-use ParagonIE\Ionizer\Contract\KeyPolicyInterface;
+use ParagonIE\Ionizer\Contract\IndexPolicyInterface;
 
-class KeyAllowList implements KeyPolicyInterface
+class IndexAllowList implements IndexPolicyInterface
 {
     /** @var array-key[] $allowed */
     private $allowed = [];
@@ -20,11 +20,11 @@ class KeyAllowList implements KeyPolicyInterface
     /**
      * Any integer or string key is valid.
      *
-     * @param array-key $key
+     * @param array-key $index
      * @return bool
      */
-    public function keyIsValid($key): bool
+    public function indexIsValid($index): bool
     {
-        return in_array($key, $this->allowed, true);
+        return in_array($index, $this->allowed, true);
     }
 }
