@@ -10,6 +10,11 @@
         </ignoreFiles>
     </projectFiles>
     <issueHandlers>
+        <ClassMustBeFinal errorLevel="info" />
+        <PossiblyUnusedMethod errorLevel="info" />
+        <PossiblyUnusedReturnValue errorLevel="info" />
+        <MissingOverrideAttribute errorLevel="info" />
+        <UnusedClass errorLevel="info" />
         <MoreSpecificImplementedParamType errorLevel="info" />
         <RedundantConditionGivenDocblockType errorLevel="info" />
         <NonInvariantDocblockPropertyType errorLevel="info" />
