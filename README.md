@@ -10,7 +10,7 @@
 Ionizer provides strict typing and input validation for dynamic inputs (i.e. HTTP request parameters).
 **Requires PHP 8.1 or higher.** 
 
-For PHP 7.0 support, please refer to the [v1.x](https://github.com/paragonie/ionizer/tree/v1.x) branch.
+For PHP 7 and 8.0 support, please refer to the [v1.x](https://github.com/paragonie/ionizer/tree/v1.x) branch.
 
 ## What is Ionizer?
 
