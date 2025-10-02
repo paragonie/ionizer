@@ -34,14 +34,7 @@ class FloatFilter extends InputFilter
      */
     public function setMaximumValue(?float $value = null): static
     {
-        if (is_null($value)) {
-            $this->max = $value;
-            return $this;
-        }
-        if (!is_numeric($value)) {
-            throw new TypeError('A number was expected. ' . gettype($value) . ' given.');
-        }
-        $this->max = (float) $value;
+        $this->max = $value;
         return $this;
     }
 
@@ -50,14 +43,7 @@ class FloatFilter extends InputFilter
      */
     public function setMinimumValue(?float $value = null): static
     {
-        if (is_null($value)) {
-            $this->min = $value;
-            return $this;
-        }
-        if (!is_numeric($value)) {
-            throw new TypeError('A number was expected. ' . gettype($value) . ' given.');
-        }
-        $this->min = (float) $value;
+        $this->min = $value;
         return $this;
     }
 

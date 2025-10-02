@@ -44,14 +44,7 @@ class IntFilter extends InputFilter
      */
     public function setMaximumValue(?int $value = null): static
     {
-        if (is_null($value)) {
-            $this->max = $value;
-            return $this;
-        }
-        if (!is_int($value)) {
-            throw new TypeError('An integer was expected. ' . gettype($value) . ' given.');
-        }
-        $this->max = (int) $value;
+        $this->max = $value;
         return $this;
     }
 
@@ -60,14 +53,7 @@ class IntFilter extends InputFilter
      */
     public function setMinimumValue(?int $value = null): static
     {
-        if (is_null($value)) {
-            $this->min = $value;
-            return $this;
-        }
-        if (!is_int($value)) {
-            throw new TypeError('An integer was expected. ' . gettype($value) . ' given.');
-        }
-        $this->min = (int) $value;
+        $this->min = $value;
         return $this;
     }
 

@@ -4,6 +4,7 @@ namespace ParagonIE\Ionizer\Filter;
 
 use ParagonIE\Ionizer\InputFilter;
 use ParagonIE\Ionizer\InvalidDataException;
+use TypeError;
 
 /**
  * Class AllowList
@@ -25,10 +26,6 @@ class AllowList extends InputFilter
         $this->addToWhiteList(...$values);
     }
 
-    /**
-     * @param array<int, scalar> $values
-     * @return self
-     */
     protected function addToWhiteList(mixed ...$values): static
     {
         switch ($this->type) {
@@ -83,9 +80,7 @@ class AllowList extends InputFilter
     /**
      * Process data using the filter rules.
      *
-     * @param mixed $data
-     * @return mixed
-     * @throws \TypeError
+     * @throws TypeError
      * @throws InvalidDataException
      */
     public function process(mixed $data = null): mixed
