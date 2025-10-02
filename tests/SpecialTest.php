@@ -1,18 +1,25 @@
 <?php
+declare(strict_types=1);
+namespace ParagonIE\Ionizer\Test;
 
 use ParagonIE\Ionizer\Filter\Special\{
     CreditCardNumberFilter,
     DateTimeFilter,
     EmailAddressFilter
 };
+use DateTime;
+use DateTimeZone;
+use Error;
 use ParagonIE\Ionizer\GeneralFilterContainer;
 use ParagonIE\Ionizer\InvalidDataException;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
-
 
 /**
  * Class SpecialTest
  */
+#[CoversClass(CreditCardNumberFilter::class)]
+#[CoversClass(EmailAddressFilter::class)]
 class SpecialTest extends TestCase
 {
     /**
@@ -89,7 +96,7 @@ class SpecialTest extends TestCase
         $testCases = $this->getDateTimeTestCases();
         foreach ($testCases as $index => $tc) {
             list($before, $after) = $tc;
-            $this->assertEquals($after, $filter($before), $index);
+            $this->assertEquals($after, $filter($before), 'index: ' . $index);
         }
     }
 

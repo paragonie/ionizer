@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+namespace ParagonIE\Ionizer\Test;
 
 use ParagonIE\Ionizer\Filter\{
     ArrayFilter,
@@ -12,19 +14,28 @@ use ParagonIE\Ionizer\Filter\{
     StrictArrayFilter,
     StringArrayFilter
 };
+use Error;
+use GenericFilterContainer;
 use ParagonIE\Ionizer\GeneralFilterContainer;
 use ParagonIE\Ionizer\InvalidDataException;
+use PHPUnit\Framework\Attributes\Before;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 
 /**
  * Class ArrayFilterTest
  */
+#[CoversClass(BoolArrayFilter::class)]
+#[CoversClass(FloatArrayFilter::class)]
+#[CoversClass(IntArrayFilter::class)]
+#[CoversClass(StringArrayFilter::class)]
 class ArrayFilterTest extends TestCase
 {
     /**
      * @before
      */
+    #[Before]
     public function before()
     {
         if (!\class_exists('GenericFilterContainer')) {
@@ -121,7 +132,6 @@ class ArrayFilterTest extends TestCase
     }
 
     /**
-     * @covers BoolArrayFilter
      * @throws Error
      * @throws InvalidDataException
      */
@@ -171,7 +181,6 @@ class ArrayFilterTest extends TestCase
     }
 
     /**
-     * @covers FloatArrayFilter
      * @throws Error
      * @throws InvalidDataException
      */
@@ -218,7 +227,6 @@ class ArrayFilterTest extends TestCase
     }
 
     /**
-     * @covers IntArrayFilter
      * @throws Error
      * @throws InvalidDataException
      */
@@ -407,7 +415,6 @@ class ArrayFilterTest extends TestCase
     }
 
     /**
-     * @covers StringArrayFilter
      * @throws Error
      * @throws InvalidDataException
      */
