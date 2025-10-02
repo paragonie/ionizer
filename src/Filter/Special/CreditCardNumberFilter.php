@@ -29,7 +29,6 @@ class CreditCardNumberFilter extends StringFilter
     {
         // Strip all non-decimal characters
         $stripped = \preg_replace('/[^0-9]/', '', $input);
-        /** @var int $length */
         $length = Binary::safeStrlen($stripped);
         if ($length < 13 || $length > 19) {
             throw new InvalidDataException('Invalid credit card number (invalid length)');
@@ -37,12 +36,9 @@ class CreditCardNumberFilter extends StringFilter
         /** @var array<int, string> $split */
         $split = \str_split($stripped, 1);
 
-        /** @var int $calc */
         $calc = 0;
-        /** @var int $l */
         $l = \count($split);
         for ($i = 0; $i < $l; ++$i) {
-            /** @var int $n */
             $n = (int) ($split[$l - $i - 1]) << ($i & 1);
             if ($n > 9) {
                 $n = ((int) ($n / 10)) + ($n % 10);

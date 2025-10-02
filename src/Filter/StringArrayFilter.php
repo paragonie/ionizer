@@ -14,7 +14,7 @@ class StringArrayFilter extends ArrayFilter
     /**
      * @var string
      */
-    protected $type = 'string[]';
+    protected string $type = 'string[]';
 
     /**
      * Apply all of the callbacks for this filter.
@@ -25,7 +25,8 @@ class StringArrayFilter extends ArrayFilter
      * @throws \TypeError
      * @throws InvalidDataException
      */
-    public function applyCallbacks($data = null, int $offset = 0)
+    #[\ReturnTypeWillChange]
+    public function applyCallbacks(mixed $data = null, int $offset = 0): array
     {
         if ($offset === 0) {
             if (\is_null($data)) {

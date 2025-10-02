@@ -2,8 +2,13 @@
 declare(strict_types=1);
 namespace ParagonIE\Ionizer\Filter\Special;
 
+use DateTime;
+use DateTimeInterface;
+use DateTimeZone;
 use ParagonIE\Ionizer\Filter\StringFilter;
 use ParagonIE\Ionizer\InvalidDataException;
+use ReturnTypeWillChange;
+use TypeError;
 
 /**
  * Class DateTimeFilter
@@ -11,21 +16,20 @@ use ParagonIE\Ionizer\InvalidDataException;
  */
 class DateTimeFilter extends StringFilter
 {
-    /** @var string $dateTimeFormat */
-    protected $dateTimeFormat;
+    protected string $dateTimeFormat;
 
-    /** @var \DateTimeZone|null $tz */
-    protected $tz;
+    /** @var DateTimeZone|null $tz */
+    protected ?DateTimeZone $tz;
 
     /**
      * DateTimeFilter constructor.
      *
      * @param string $format
-     * @param \DateTimeZone|null $tz
+     * @param DateTimeZone|null $tz
      */
     public function __construct(
-        string $format = \DateTime::ATOM,
-        \DateTimeZone $tz = null
+        string $format = DateTimeInterface::ATOM,
+        ?DateTimeZone $tz = null
     ) {
         $this->dateTimeFormat = $format;
         $this->tz = $tz;
@@ -34,20 +38,18 @@ class DateTimeFilter extends StringFilter
     /**
      * Apply all of the callbacks for this filter.
      *
-     * @param mixed|null $data
-     * @param int $offset
-     * @return mixed
-     * @throws \TypeError
+     * @throws TypeError
      * @throws InvalidDataException
      */
-    public function applyCallbacks($data = null, int $offset = 0)
+    #[ReturnTypeWillChange]
+    public function applyCallbacks(mixed $data = null, int $offset = 0): string
     {
         if ($offset === 0) {
             if (!\is_null($data)) {
                 $data = (string) $data;
                 try {
                     /** @var string $data */
-                    $data = (new \DateTime($data, $this->tz))
+                    $data = (new DateTime($data, $this->tz))
                         ->format($this->dateTimeFormat);
                 } catch (\Exception $ex) {
                     throw new InvalidDataException(

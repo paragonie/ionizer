@@ -4,6 +4,11 @@ namespace ParagonIE\Ionizer\Filter;
 
 use ParagonIE\Ionizer\InvalidDataException;
 use ParagonIE\Ionizer\Util;
+use ReturnTypeWillChange;
+use function is_array;
+use function is_null;
+use function is_string;
+use function sprintf;
 
 /**
  * Class FloatArrayFilter
@@ -14,12 +19,12 @@ class FloatArrayFilter extends ArrayFilter
     /**
      * @var float
      */
-    protected $default = 0.0;
+    protected mixed $default = 0.0;
 
     /**
      * @var string
      */
-    protected $type = 'float[]';
+    protected string $type = 'float[]';
 
     /**
      * Apply all of the callbacks for this filter.
@@ -30,14 +35,15 @@ class FloatArrayFilter extends ArrayFilter
      * @throws \TypeError
      * @throws InvalidDataException
      */
-    public function applyCallbacks($data = null, int $offset = 0)
+    #[ReturnTypeWillChange]
+    public function applyCallbacks(mixed $data = null, int $offset = 0): array
     {
         if ($offset === 0) {
-            if (\is_null($data)) {
+            if (is_null($data)) {
                 return parent::applyCallbacks($data, 0);
-            } elseif (!\is_array($data)) {
+            } elseif (!is_array($data)) {
                 throw new \TypeError(
-                    \sprintf('Expected an array of floats (%s).', $this->index)
+                    sprintf('Expected an array of floats (%s).', $this->index)
                 );
             }
 
@@ -45,7 +51,7 @@ class FloatArrayFilter extends ArrayFilter
             $data = (array) $data;
             if (!Util::is1DArray($data)) {
                 throw new \TypeError(
-                    \sprintf('Expected a 1-dimensional array (%s).', $this->index)
+                    sprintf('Expected a 1-dimensional array (%s).', $this->index)
                 );
             }
 
@@ -53,20 +59,20 @@ class FloatArrayFilter extends ArrayFilter
              * @var string|int|float|bool|array|null $val
              */
             foreach ($data as $key => $val) {
-                if (\is_array($val)) {
+                if (is_array($val)) {
                     throw new \TypeError(
-                        \sprintf('Expected a 1-dimensional array (%s).', $this->index)
+                        sprintf('Expected a 1-dimensional array (%s).', $this->index)
                     );
                 }
                 if (\is_int($val) || \is_float($val)) {
                     $data[$key] = (float) $val;
-                } elseif (\is_null($val) || $val === '') {
+                } elseif (is_null($val) || $val === '') {
                     $data[$key] = (float) $this->default;
-                } elseif (\is_string($val) && \is_numeric($val)) {
+                } elseif (is_string($val) && \is_numeric($val)) {
                     $data[$key] = (float) $val;
                 } else {
                     throw new \TypeError(
-                        \sprintf('Expected a float at index %s (%s).', $key, $this->index)
+                        sprintf('Expected a float at index %s (%s).', $key, $this->index)
                     );
                 }
             }

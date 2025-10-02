@@ -4,6 +4,13 @@ namespace ParagonIE\Ionizer\Filter\Special;
 
 use ParagonIE\Ionizer\Filter\StringFilter;
 use ParagonIE\Ionizer\InvalidDataException;
+use function checkdnsrr;
+use function explode;
+use function filter_var;
+use function is_string;
+use function preg_match;
+use function strpos;
+use function substr_count;
 
 /**
  * Class EmailAddressFilter
@@ -11,22 +18,14 @@ use ParagonIE\Ionizer\InvalidDataException;
  */
 class EmailAddressFilter extends StringFilter
 {
-    /**
-     * @var bool $checkDNS
-     */
-    protected $checkDNS = true;
+    protected bool $checkDNS = true;
 
     public function __construct()
     {
         $this->addThisCallback('validateEmailAddress');
     }
 
-    /**
-     * @param bool $value
-     *
-     * @return self
-     */
-    public function setCheckDNS(bool $value): self
+    public function setCheckDNS(bool $value): static
     {
         $this->checkDNS = $value;
         return $this;
@@ -41,15 +40,15 @@ class EmailAddressFilter extends StringFilter
     public function validateEmailAddress(string $input): string
     {
         /** @var string|bool $filtered */
-        $filtered = \filter_var($input, FILTER_VALIDATE_EMAIL);
-        if (!\is_string($filtered)) {
+        $filtered = filter_var($input, FILTER_VALIDATE_EMAIL);
+        if (!is_string($filtered)) {
             throw new InvalidDataException('Invalid email address: ' . $input);
         }
-        $pos = \strpos($filtered, '@');
+        $pos = strpos($filtered, '@');
         if ($pos === false) {
             throw new InvalidDataException('Invalid email address (no @): ' . $input);
         }
-        if (\substr_count($filtered, '@') !== 1) {
+        if (substr_count($filtered, '@') !== 1) {
             throw new InvalidDataException('Invalid email address (more than one @): ' . $input);
         }
         if ($pos === 0) {
@@ -59,16 +58,16 @@ class EmailAddressFilter extends StringFilter
          * @var string $username
          * @var string $domain
          */
-        list ($username, $domain) = \explode('@', $filtered);
-        if (\preg_match('#^\.#', $username) || \preg_match('#\.$#', $username)) {
+        list ($username, $domain) = explode('@', $filtered);
+        if (preg_match('#^\.#', $username) || preg_match('#\.$#', $username)) {
             throw new InvalidDataException('Invalid email address (leading or trailing dot): ' . $input);
         }
-        if (\strpos($filtered, '..') !== false) {
+        if (str_contains($filtered, '..')) {
             throw new InvalidDataException('Invalid email address (consecutive dots): ' . $input);
         }
         if ($this->checkDNS) {
-            if (!\preg_match('#^\[?' . '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' . '\]?$#', $domain)) {
-                if (!\checkdnsrr($domain, 'MX')) {
+            if (!preg_match('#^\[?' . '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' . '\]?$#', $domain)) {
+                if (!checkdnsrr($domain, 'MX')) {
                     throw new InvalidDataException('Invalid email address (no MX record on domain): ' . $input);
                 }
             }

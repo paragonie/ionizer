@@ -26,7 +26,7 @@ class SpecialTest extends TestCase
      * @throws Error
      * @throws InvalidDataException
      */
-    public function testCreditCardNumberFilter()
+    public function testCreditCardNumberFilter(): void
     {
         $filter = (new GeneralFilterContainer())
             ->addFilter('cc', new CreditCardNumberFilter());
@@ -56,7 +56,7 @@ class SpecialTest extends TestCase
      * @throws Error
      * @throws InvalidDataException
      */
-    public function testDateTimeFilter()
+    public function testDateTimeFilter(): void
     {
         $filter = (new GeneralFilterContainer())
             ->addFilter(
@@ -189,7 +189,7 @@ class SpecialTest extends TestCase
      * @throws Error
      * @throws InvalidDataException
      */
-    public function testEmailAddressFilter()
+    public function testEmailAddressFilter(): void
     {
         $emailFilter = (new EmailAddressFilter());
         $filter = (new GeneralFilterContainer())

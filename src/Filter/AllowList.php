@@ -14,7 +14,7 @@ class AllowList extends InputFilter
     /**
      * @var array<int, mixed>
      */
-    protected $allowedValues = [];
+    protected array $allowedValues = [];
 
     /**
      * AllowList constructor.
@@ -29,7 +29,7 @@ class AllowList extends InputFilter
      * @param array<int, scalar> $values
      * @return self
      */
-    protected function addToWhiteList(...$values)
+    protected function addToWhiteList(mixed ...$values): static
     {
         switch ($this->type) {
             case 'bool':
@@ -88,7 +88,7 @@ class AllowList extends InputFilter
      * @throws \TypeError
      * @throws InvalidDataException
      */
-    public function process($data = null)
+    public function process(mixed $data = null): mixed
     {
         if (!empty($this->allowedValues)) {
             if (!\in_array($data, $this->allowedValues, true)) {

@@ -28,7 +28,7 @@ class FilterTest extends TestCase
      * @throws Error
      * @throws InvalidDataException
      */
-    public function testBoolFilter()
+    public function testBoolFilter(): void
     {
         $filter = (new GeneralFilterContainer())
             ->addFilter('test1', new BoolFilter())
@@ -67,7 +67,7 @@ class FilterTest extends TestCase
      * @throws Error
      * @throws InvalidDataException
      */
-    public function testFloatFilter()
+    public function testFloatFilter(): void
     {
         $filter = (new GeneralFilterContainer())
             ->addFilter('test1', new FloatFilter())
@@ -146,7 +146,7 @@ class FilterTest extends TestCase
      * @throws Error
      * @throws InvalidDataException
      */
-    public function testIntFilter()
+    public function testIntFilter(): void
     {
         $filter = (new GeneralFilterContainer())
             ->addFilter('test1', new IntFilter())
@@ -238,7 +238,7 @@ class FilterTest extends TestCase
      * @throws Error
      * @throws InvalidDataException
      */
-    public function testStringFilter()
+    public function testStringFilter(): void
     {
         $filter = (new GeneralFilterContainer())
             ->addFilter('test1', new StringFilter())
@@ -280,7 +280,7 @@ class FilterTest extends TestCase
     /**
      * @throws InvalidDataException
      */
-    public function testStringRegex()
+    public function testStringRegex(): void
     {
         $filter = new GeneralFilterContainer();
         $filter->addFilter(

@@ -15,13 +15,15 @@ use ParagonIE\Ionizer\Filter\{
     StringArrayFilter
 };
 use Error;
-use GenericFilterContainer;
+use Exception;
+use ParagonIE\Ionizer\Test\Errata\GenericFilterContainer;
 use ParagonIE\Ionizer\GeneralFilterContainer;
 use ParagonIE\Ionizer\InvalidDataException;
 use PHPUnit\Framework\Attributes\Before;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
-
+use TypeError;
+use function bin2hex;
 
 /**
  * Class ArrayFilterTest
@@ -36,7 +38,7 @@ class ArrayFilterTest extends TestCase
      * @before
      */
     #[Before]
-    public function before()
+    public function before(): void
     {
         if (!\class_exists('GenericFilterContainer')) {
             require_once __DIR__ . '/Errata/GenericFilterContainer.php';
@@ -49,7 +51,7 @@ class ArrayFilterTest extends TestCase
      * @throws Error
      * @throws InvalidDataException
      */
-    public function testArrayFilter()
+    public function testArrayFilter(): void
     {
         $filter = (new GeneralFilterContainer())
             ->addFilter('test', new ArrayFilter())
@@ -135,7 +137,7 @@ class ArrayFilterTest extends TestCase
      * @throws Error
      * @throws InvalidDataException
      */
-    public function testBoolArrayFilter()
+    public function testBoolArrayFilter(): void
     {
         $filter = (new GeneralFilterContainer())
             ->addFilter('test', new BoolArrayFilter());
@@ -176,7 +178,7 @@ class ArrayFilterTest extends TestCase
             ];
             $filter($typeError);
             $this->fail('Expected a TypeError');
-        } catch (\TypeError $ex) {
+        } catch (TypeError $ex) {
         }
     }
 
@@ -184,7 +186,7 @@ class ArrayFilterTest extends TestCase
      * @throws Error
      * @throws InvalidDataException
      */
-    public function testFloatArrayFilter()
+    public function testFloatArrayFilter(): void
     {
         $filter = (new GeneralFilterContainer())
             ->addFilter('test', new FloatArrayFilter());
@@ -222,7 +224,7 @@ class ArrayFilterTest extends TestCase
             ];
             $filter($typeError);
             $this->fail('Expected a TypeError');
-        } catch (\TypeError $ex) {
+        } catch (TypeError $ex) {
         }
     }
 
@@ -230,7 +232,7 @@ class ArrayFilterTest extends TestCase
      * @throws Error
      * @throws InvalidDataException
      */
-    public function testIntArrayFilter()
+    public function testIntArrayFilter(): void
     {
         $filter = (new GeneralFilterContainer())
             ->addFilter('test', new IntArrayFilter())
@@ -273,7 +275,7 @@ class ArrayFilterTest extends TestCase
             ];
             $filter($typeError);
             $this->fail('Expected a TypeError');
-        } catch (\TypeError $ex) {
+        } catch (TypeError $ex) {
         }
     }
 
@@ -282,7 +284,7 @@ class ArrayFilterTest extends TestCase
      * @throws Exception
      * @throws InvalidDataException
      */
-    public function testStrictArrayFilter()
+    public function testStrictArrayFilter(): void
     {
         try {
             (new GeneralFilterContainer())
@@ -316,7 +318,7 @@ class ArrayFilterTest extends TestCase
                 ]
             ]);
             $this->fail('Uncaught value mismatch');
-        } catch (\TypeError $ex) {
+        } catch (TypeError $ex) {
             $this->assertSame(
                 'Expected an array<int, string>. At least one element of <int, int> was found (test[0] == 1).',
                 $ex->getMessage()
@@ -336,7 +338,7 @@ class ArrayFilterTest extends TestCase
                 ]
             ]);
             $this->fail('Uncaught value mismatch');
-        } catch (\TypeError $ex) {
+        } catch (TypeError $ex) {
             $this->assertSame(
                 'Expected an array<int, string>. At least one element of <string, string> was found (test["1a"] == "def").',
                 $ex->getMessage()
@@ -365,7 +367,7 @@ class ArrayFilterTest extends TestCase
                 ]
             ]);
             $this->fail('Invalid key accepted');
-        } catch (\TypeError $ex) {
+        } catch (TypeError $ex) {
             $this->assertSame(
                 'Expected an array<string, stdClass>. At least one element of <int, stdClass> was found (second[123] == {"0":"test2"}).',
                 $ex->getMessage()
@@ -380,7 +382,7 @@ class ArrayFilterTest extends TestCase
                 ]
             ]);
             $this->fail('Null accepted where it was not wanted');
-        } catch (\TypeError $ex) {
+        } catch (TypeError $ex) {
             $this->assertSame(
                 'Expected an array<string, stdClass>. At least one element of <int, null> was found (second[123] == null).',
                 $ex->getMessage()
@@ -397,7 +399,7 @@ class ArrayFilterTest extends TestCase
             ],
         ]);
 
-        $fuzz = \bin2hex(\random_bytes(33));
+        $fuzz = bin2hex(\random_bytes(33));
         try {
             $cf([
                 'test' => [
@@ -406,7 +408,7 @@ class ArrayFilterTest extends TestCase
                 ],
             ]);
             $this->fail('Invalid function name was declared');
-        } catch (\TypeError $ex) {
+        } catch (TypeError $ex) {
             $this->assertSame(
                 'Expected an array<string, callable>. At least one element of <string, string> was found (test["b"] == "' . $fuzz . '").',
                 $ex->getMessage()
@@ -418,7 +420,7 @@ class ArrayFilterTest extends TestCase
      * @throws Error
      * @throws InvalidDataException
      */
-    public function testStringArrayFilter()
+    public function testStringArrayFilter(): void
     {
         $filter = (new GeneralFilterContainer())
             ->addFilter('test', new StringArrayFilter());
@@ -455,7 +457,7 @@ class ArrayFilterTest extends TestCase
             ];
             $filter($typeError);
             $this->fail('Expected a TypeError');
-        } catch (\TypeError $ex) {
+        } catch (TypeError $ex) {
         }
     }
 

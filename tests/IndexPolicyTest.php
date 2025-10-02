@@ -18,7 +18,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(StringsOnly::class)]
 class IndexPolicyTest extends TestCase
 {
-    public function testAnyKeys()
+    public function testAnyKeys(): void
     {
         $any = new AnyIndex();
         $this->assertTrue($any->indexIsValid('foo'));
@@ -28,7 +28,7 @@ class IndexPolicyTest extends TestCase
         $this->assertFalse($any->indexIsValid(null));
     }
 
-    public function testIntegersOnly()
+    public function testIntegersOnly(): void
     {
         $int = new IntegersOnly();
         $this->assertTrue($int->indexIsValid(0));
@@ -39,7 +39,7 @@ class IndexPolicyTest extends TestCase
         $this->assertFalse($int->indexIsValid('foo'));
     }
 
-    public function testKeyAllowList()
+    public function testKeyAllowList(): void
     {
         $allow = new IndexAllowList('foo', 'bar', 'baz');
         $this->assertTrue($allow->indexIsValid('foo'));
@@ -55,7 +55,7 @@ class IndexPolicyTest extends TestCase
         $this->assertFalse($allow->indexIsValid('1'));
     }
 
-    public function testStringsOnly()
+    public function testStringsOnly(): void
     {
         $str = new StringsOnly();
         $this->assertTrue($str->indexIsValid('foo'));

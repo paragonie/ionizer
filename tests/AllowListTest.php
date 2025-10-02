@@ -19,7 +19,7 @@ class AllowListTest extends TestCase
      * @throws Error
      * @throws InvalidDataException
      */
-    public function testAllowList()
+    public function testAllowList(): void
     {
         $filter = (new GeneralFilterContainer())
             ->addFilter(

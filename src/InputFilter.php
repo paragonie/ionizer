@@ -4,6 +4,7 @@ namespace ParagonIE\Ionizer;
 
 use ParagonIE\ConstantTime\Binary;
 use ParagonIE\Ionizer\Contract\FilterInterface;
+use TypeError;
 
 /**
  * Class InputFilter
@@ -14,27 +15,24 @@ class InputFilter implements FilterInterface
     /**
      * @var string|int|float|bool|array|null
      */
-    protected $default;
+    protected mixed $default;
 
-    /**
-     * @var string
-     */
-    protected $type = '';
+    protected string $type = '';
 
     /**
      * @var string (for debugging purposes)
      */
-    protected $index = '';
+    protected string $index = '';
 
     /**
      * @var callable[]
      */
-    protected $callbacks = [];
+    protected array $callbacks = [];
 
     /**
      * @var string[]
      */
-    protected $thisCallbacks = [];
+    protected array $thisCallbacks = [];
 
     /**
      * Sets the expected input type (e.g. string, boolean)
@@ -111,9 +109,9 @@ class InputFilter implements FilterInterface
      * @param mixed $data
      * @return mixed
      * @throws InvalidDataException
-     * @throws \TypeError
+     * @throws TypeError
      */
-    public function process($data = null)
+    public function process(mixed $data = null): mixed
     {
         /** @var string|int|float|bool|array|null $data */
         $data = $this->applyCallbacks($data, 0);

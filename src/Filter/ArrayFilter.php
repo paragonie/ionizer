@@ -5,6 +5,11 @@ namespace ParagonIE\Ionizer\Filter;
 use ParagonIE\Ionizer\Contract\IndexPolicyInterface;
 use ParagonIE\Ionizer\InputFilter;
 use ParagonIE\Ionizer\InvalidDataException;
+use ReturnTypeWillChange;
+use TypeError;
+use function is_array;
+use function is_null;
+use function sprintf;
 
 /**
  * Class ArrayFilter
@@ -12,28 +17,19 @@ use ParagonIE\Ionizer\InvalidDataException;
  */
 class ArrayFilter extends InputFilter
 {
-    /**
-     * @var mixed
-     */
-    protected $default = [];
+    protected mixed $default = [];
 
-    /**
-     * @var string
-     */
-    protected $type = 'array';
+    protected string $type = 'array';
 
-    /**
-     * @var ?IndexPolicyInterface $indexPolicy
-     */
-    protected $indexPolicy = null;
+    protected ?IndexPolicyInterface $indexPolicy = null;
 
     /**
      * Add restrictions to the keys allowed in this array
      *
      * @param IndexPolicyInterface $indexPolicy
-     * @return $this
+     * @return static
      */
-    public function setIndexPolicy(IndexPolicyInterface $indexPolicy): self
+    public function setIndexPolicy(IndexPolicyInterface $indexPolicy): static
     {
         $this->indexPolicy = $indexPolicy;
         return $this;
@@ -44,26 +40,27 @@ class ArrayFilter extends InputFilter
      *
      * @param mixed $data
      * @return array
-     * @throws \TypeError
+     * @throws TypeError
      * @throws InvalidDataException
      */
-    public function process($data = null)
+    #[ReturnTypeWillChange]
+    public function process(mixed $data = null): array
     {
-        if (\is_array($data)) {
+        if (is_array($data)) {
             $data = (array) $data;
-        } elseif (\is_null($data)) {
+        } elseif (is_null($data)) {
             $data = [];
         } else {
-            throw new \TypeError(
-                \sprintf('Expected an array (%s).', $this->index)
+            throw new TypeError(
+                sprintf('Expected an array (%s).', $this->index)
             );
         }
         if (!is_null($this->indexPolicy)) {
             $keys = array_keys($data);
             foreach ($keys as $arrayKey) {
                 if (!$this->indexPolicy->indexIsValid($arrayKey)) {
-                    throw new \TypeError(
-                        \sprintf("Invalid key (%s) in violation of key policy", $arrayKey)
+                    throw new TypeError(
+                        sprintf("Invalid key (%s) in violation of key policy", $arrayKey)
                     );
                 }
             }

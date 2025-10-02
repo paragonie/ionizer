@@ -4,6 +4,11 @@ namespace ParagonIE\Ionizer\Filter;
 
 use ParagonIE\Ionizer\InvalidDataException;
 use ParagonIE\Ionizer\Util;
+use ReturnTypeWillChange;
+use TypeError;
+use function is_array;
+use function is_null;
+use function sprintf;
 
 /**
  * Class BoolArrayFilter
@@ -14,7 +19,7 @@ class BoolArrayFilter extends ArrayFilter
     /**
      * @var string
      */
-    protected $type = 'bool[]';
+    protected string $type = 'bool[]';
 
     /**
      * Apply all of the callbacks for this filter.
@@ -22,27 +27,25 @@ class BoolArrayFilter extends ArrayFilter
      * @param mixed $data
      * @param int $offset
      * @return mixed
-     * @throws \TypeError
+     * @throws TypeError
      * @throws InvalidDataException
      */
-    public function applyCallbacks($data = null, int $offset = 0)
+    #[ReturnTypeWillChange]
+    public function applyCallbacks($data = null, int $offset = 0): array
     {
         if ($offset === 0) {
-            if (\is_null($data)) {
+            if (is_null($data)) {
                 return parent::applyCallbacks($data, 0);
-            } elseif (!\is_array($data)) {
-                throw new \TypeError(
-                    \sprintf('Expected an array of booleans (%s).', $this->index)
+            } elseif (!is_array($data)) {
+                throw new TypeError(
+                    sprintf('Expected an array of booleans (%s).', $this->index)
                 );
             }
-            /**
-             * @var array<mixed, array<mixed, mixed>>
-             */
             $data = (array) $data;
 
             if (!Util::is1DArray($data)) {
-                throw new \TypeError(
-                    \sprintf('Expected a 1-dimensional array (%s).', $this->index)
+                throw new TypeError(
+                    sprintf('Expected a 1-dimensional array (%s).', $this->index)
                 );
             }
             /**
@@ -51,9 +54,9 @@ class BoolArrayFilter extends ArrayFilter
              * @var string|int|float|bool|array|null $val
              */
             foreach ($data as $key => $val) {
-                if (\is_array($val)) {
-                    throw new \TypeError(
-                        \sprintf('Expected a 1-dimensional array (%s).', $this->index)
+                if (is_array($val)) {
+                    throw new TypeError(
+                        sprintf('Expected a 1-dimensional array (%s).', $this->index)
                     );
                 }
                 $data[$key] = !empty($val);

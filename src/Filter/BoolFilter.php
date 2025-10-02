@@ -5,6 +5,10 @@ namespace ParagonIE\Ionizer\Filter;
 use ParagonIE\Ionizer\Contract\FilterInterface;
 use ParagonIE\Ionizer\InputFilter;
 use ParagonIE\Ionizer\InvalidDataException;
+use ReturnTypeWillChange;
+use TypeError;
+use function is_array;
+use function sprintf;
 
 /**
  * Class BoolFilter
@@ -15,26 +19,27 @@ class BoolFilter extends InputFilter
     /**
      * @var mixed
      */
-    protected $default = false;
+    protected mixed $default = false;
 
     /**
      * @var string
      */
-    protected $type = 'bool';
+    protected string $type = 'bool';
 
     /**
      * Process data using the filter rules.
      *
      * @param mixed $data
      * @return bool
-     * @throws \TypeError
+     * @throws TypeError
      * @throws InvalidDataException
      */
-    public function process($data = null)
+    #[ReturnTypeWillChange]
+    public function process(mixed $data = null): bool
     {
-        if (\is_array($data)) {
-            throw new \TypeError(
-                \sprintf('Unexpected array for boolean filter (%s).', $this->index)
+        if (is_array($data)) {
+            throw new TypeError(
+                sprintf('Unexpected array for boolean filter (%s).', $this->index)
             );
         }
         return (bool) parent::process(!empty($data));
@@ -45,12 +50,12 @@ class BoolFilter extends InputFilter
      *
      * @param string $typeIndicator
      * @return FilterInterface
-     * @throws \TypeError
+     * @throws TypeError
      */
     public function setType(string $typeIndicator): FilterInterface
     {
         if ($typeIndicator !== 'bool') {
-            throw new \TypeError(
+            throw new TypeError(
                 'Type must always be set to "bool".'
             );
         }

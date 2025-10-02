@@ -4,6 +4,16 @@ namespace ParagonIE\Ionizer\Filter;
 
 use ParagonIE\Ionizer\InputFilter;
 use ParagonIE\Ionizer\InvalidDataException;
+use ReturnTypeWillChange;
+use TypeError;
+use function gettype;
+use function is_array;
+use function is_float;
+use function is_int;
+use function is_null;
+use function is_numeric;
+use function is_string;
+use function sprintf;
 
 /**
  * Class FloatFilter
@@ -11,57 +21,41 @@ use ParagonIE\Ionizer\InvalidDataException;
  */
 class FloatFilter extends InputFilter
 {
-    /**
-     * @var mixed
-     */
-    protected $default = 0;
+    protected mixed $default = 0;
+
+    protected ?float $max = null;
+
+    protected ?float $min = null;
+
+    protected string $type = 'float';
 
     /**
-     * @var float|null
+     * @throws TypeError
      */
-    protected $max = null;
-
-    /**
-     * @var float|null
-     */
-    protected $min = null;
-
-    /**
-     * @var string
-     */
-    protected $type = 'float';
-
-    /**
-     * @param mixed|null $value
-     * @return self
-     * @throws \TypeError
-     */
-    public function setMaximumValue($value = null): self
+    public function setMaximumValue(?float $value = null): static
     {
-        if (\is_null($value)) {
+        if (is_null($value)) {
             $this->max = $value;
             return $this;
         }
-        if (!\is_numeric($value)) {
-            throw new \TypeError('A number was expected. ' . \gettype($value) . ' given.');
+        if (!is_numeric($value)) {
+            throw new TypeError('A number was expected. ' . gettype($value) . ' given.');
         }
         $this->max = (float) $value;
         return $this;
     }
 
     /**
-     * @param mixed|null $value
-     * @return self
-     * @throws \TypeError
+     * @throws TypeError
      */
-    public function setMinimumValue($value = null): self
+    public function setMinimumValue(?float $value = null): static
     {
-        if (\is_null($value)) {
+        if (is_null($value)) {
             $this->min = $value;
             return $this;
         }
-        if (!\is_numeric($value)) {
-            throw new \TypeError('A number was expected. ' . \gettype($value) . ' given.');
+        if (!is_numeric($value)) {
+            throw new TypeError('A number was expected. ' . gettype($value) . ' given.');
         }
         $this->min = (float) $value;
         return $this;
@@ -72,34 +66,35 @@ class FloatFilter extends InputFilter
      *
      * @param mixed $data
      * @return float
-     * @throws \TypeError
+     * @throws TypeError
      * @throws InvalidDataException
      */
-    public function process($data = null)
+    #[ReturnTypeWillChange]
+    public function process(mixed $data = null): float
     {
-        if (\is_array($data)) {
-            throw new \TypeError(
-                \sprintf('Unexpected array for float filter (%s).', $this->index)
+        if (is_array($data)) {
+            throw new TypeError(
+                sprintf('Unexpected array for float filter (%s).', $this->index)
             );
         }
-        if (\is_int($data) || \is_float($data)) {
+        if (is_int($data) || is_float($data)) {
             $data = (float) $data;
-        } elseif (\is_null($data) || $data === '') {
+        } elseif (is_null($data) || $data === '') {
             $data = null;
-        } elseif (\is_string($data) && \is_numeric($data)) {
+        } elseif (is_string($data) && is_numeric($data)) {
             $data = (float) $data;
         } else {
-            throw new \TypeError(
-                \sprintf('Expected an integer or floating point number (%s).', $this->index)
+            throw new TypeError(
+                sprintf('Expected an integer or floating point number (%s).', $this->index)
             );
         }
 
-        if (!\is_null($this->min) && !\is_null($data)) {
+        if (!is_null($this->min) && !is_null($data)) {
             if ($data < $this->min) {
                 $data = null;
             }
         }
-        if (!\is_null($this->max) && !\is_null($data)) {
+        if (!is_null($this->max) && !is_null($data)) {
             if ($data > $this->max) {
                 $data = null;
             }

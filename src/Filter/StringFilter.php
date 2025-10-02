@@ -5,6 +5,14 @@ namespace ParagonIE\Ionizer\Filter;
 use ParagonIE\ConstantTime\Binary;
 use ParagonIE\Ionizer\InputFilter;
 use ParagonIE\Ionizer\InvalidDataException;
+use ReturnTypeWillChange;
+use TypeError;
+use function is_array;
+use function is_null;
+use function is_numeric;
+use function is_object;
+use function preg_replace;
+use function sprintf;
 
 /**
  * Class StringFilter
@@ -15,17 +23,17 @@ class StringFilter extends InputFilter
     /**
      * @var mixed
      */
-    protected $default = '';
+    protected mixed $default = '';
 
     /**
      * @var string
      */
-    protected $pattern = '';
+    protected string $pattern = '';
 
     /**
      * @var string
      */
-    protected $type = 'string';
+    protected string $type = 'string';
 
     /**
      * @param string $input
@@ -45,44 +53,43 @@ class StringFilter extends InputFilter
      *
      * @param mixed $data
      * @return string
-     * @throws \TypeError
+     * @throws TypeError
      * @throws InvalidDataException
      */
-    public function process($data = null)
+    #[ReturnTypeWillChange]
+    public function process(mixed $data = null): string
     {
-        if (\is_array($data)) {
-            throw new \TypeError(
-                \sprintf('Unexpected array for string filter (%s).', $this->index)
+        if (is_array($data)) {
+            throw new TypeError(
+                sprintf('Unexpected array for string filter (%s).', $this->index)
             );
         }
         if (\is_string($data)) {
-        } elseif (\is_object($data) && \method_exists($data, '__toString')) {
+            // continue
+        } elseif (is_object($data) && \method_exists($data, '__toString')) {
             $data = (string)$data->__toString();
-        } elseif (\is_numeric($data)) {
+        } elseif (is_numeric($data)) {
             $data = (string)$data;
-        } elseif (\is_null($data)) {
+        } elseif (is_null($data)) {
             $data = null;
         } else {
-            throw new \TypeError(
-                \sprintf('Expected a string (%s).', $this->index)
+            throw new TypeError(
+                sprintf('Expected a string (%s).', $this->index)
             );
         }
         return (string) parent::process($data);
     }
 
-        /**
+    /**
      * Set a regular expression pattern that the input string
      * must match.
-     *
-     * @param string $pattern
-     * @return self
      */
-    public function setPattern(string $pattern = ''): self
+    public function setPattern(string $pattern = ''): static
     {
         if (empty($pattern)) {
             $this->pattern = '';
         } else {
-            $this->pattern = '#' . \preg_replace('/([^\\\\])\#/', '$1\\#', $pattern) . '#';
+            $this->pattern = '#' . preg_replace('/([^\\\\])#/', '$1\\#', $pattern) . '#';
         }
         return $this;
     }
@@ -94,15 +101,16 @@ class StringFilter extends InputFilter
      * @param int $offset
      * @return mixed
      * @throws InvalidDataException
-     * @throws \TypeError
+     * @throws TypeError
      */
-    public function applyCallbacks($data = null, int $offset = 0)
+    #[ReturnTypeWillChange]
+    public function applyCallbacks(mixed $data = null, int $offset = 0): string
     {
         if ($offset === 0) {
             if (!empty($this->pattern)) {
                 if (!\preg_match((string) $this->pattern, (string) $data)) {
                     throw new InvalidDataException(
-                        \sprintf('Pattern match failed (%s).', $this->index)
+                        sprintf('Pattern match failed (%s).', $this->index)
                     );
                 }
             }
