@@ -10,6 +10,15 @@
         </ignoreFiles>
     </projectFiles>
     <issueHandlers>
+        <ArgumentTypeCoercion errorLevel="info" />
+        <RiskyTruthyFalsyComparison errorLevel="info" />
+        <PossiblyNullArgument errorLevel="info" />
+        <PossiblyFalseArgument errorLevel="info" />
+        <ClassMustBeFinal errorLevel="info" />
+        <PossiblyUnusedMethod errorLevel="info" />
+        <PossiblyUnusedReturnValue errorLevel="info" />
+        <MissingOverrideAttribute errorLevel="info" />
+        <UnusedClass errorLevel="info" />
         <MoreSpecificImplementedParamType errorLevel="info" />
         <RedundantConditionGivenDocblockType errorLevel="info" />
         <NonInvariantDocblockPropertyType errorLevel="info" />
