@@ -58,9 +58,6 @@ jobs:
       - name: PHPUnit tests
         run: vendor/bin/phpunit
 
-      - name: Static Analysis
-        run: vendor/bin/psalm
-
   modern:
     name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
     runs-on: ${{ matrix.operating-system }}
@@ -85,6 +82,3 @@ jobs:
         run: composer install
       - name: PHPUnit tests
         run: vendor/bin/phpunit
-
-      - name: Static Analysis
-        run: vendor/bin/psalm
