@@ -150,22 +150,14 @@ abstract class InputFilterContainer implements FilterContainerInterface
     }
 
     /**
-     * Only allow allow printable ASCII characters:
+     * Encode exact field bytes as a PHP string literal for the reference expression.
      *
      * @param string $input
      * @return string
-     * @throws \Error
      */
     protected static function sanitize(string $input): string
     {
-        /** @var string|bool $sanitized */
-        $sanitized = \json_encode(
-            \preg_replace('#[^\x20-\x7e]#', '', $input)
-        );
-        if (!\is_string($sanitized)) {
-            throw new \Error('Could not sanitize string');
-        }
-        return $sanitized;
+        return var_export($input, true);
     }
 
     /**

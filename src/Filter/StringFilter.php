@@ -86,7 +86,7 @@ class StringFilter extends InputFilter
      */
     public function setPattern(string $pattern = ''): static
     {
-        if (empty($pattern)) {
+        if ($pattern === '') {
             $this->pattern = '';
         } else {
             $this->pattern = '#' . preg_replace('/([^\\\\])#/', '$1\\#', $pattern) . '#';

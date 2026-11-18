@@ -14,6 +14,7 @@ use ParagonIE\Ionizer\GeneralFilterContainer;
 
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 /**
  * Class FilterTest
@@ -293,5 +294,43 @@ class FilterTest extends TestCase
             ['test1' => 'abcdef'],
             $after
         );
+    }
+
+    public function testSecondInstanceValidatorRuns(): void
+    {
+        $filter = new class extends StringFilter {
+            public function normalize($value): string
+            {
+                return trim($value);
+            }
+            public function reject($value)
+            {
+                throw new InvalidDataException('Rejected');
+            }
+        };
+        $filter->addThisCallback('normalize')->addThisCallback('reject');
+        $this->expectException(InvalidDataException::class);
+        $filter->process(' attacker ');
+    }
+
+    public function testConfiguredRejectionIsEnforced(): void
+    {
+        $rule = (new StringFilter())->setPattern('0');
+        $container = new GeneralFilterContainer();
+        $container->addFilter('code', $rule);
+        $input = ['code' => 'x'];
+        $rejected = false;
+        try {
+            $result = $container($input);
+            if ($result['code'] !== 'x') {
+                throw new RuntimeException('Unexpected returned value; cannot establish the declared bypass');
+            }
+        } catch (InvalidDataException $error) {
+            if ($error->getMessage() !== 'Pattern match failed (code).') {
+                throw $error;
+            }
+            $rejected = true;
+        }
+        $this->assertTrue($rejected, 'StringFilter must reject x when the fixed bare pattern body is 0');
     }
 }

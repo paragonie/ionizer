@@ -185,7 +185,7 @@ class InputFilter implements FilterInterface
         $func = $this->thisCallbacks[$offset];
         /** @var string|int|float|bool|array|null $data */
         $data = $this->$func($data);
-        return $this->applyCallbacks($data, $offset + 1);
+        return $this->applyThisCallbacks($data, $offset + 1);
     }
 
     /**

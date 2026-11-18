@@ -93,6 +93,7 @@ class AllowList extends InputFilter
 
         /** @var string|int|float|bool|null $data */
         $data = $this->applyCallbacks($data, 0);
+        $data = $this->applyThisCallbacks($data, 0);
         if ($data === null) {
             /** @var string|int|float|bool|null $data */
             $data = $this->default;
